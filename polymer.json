@@ -1,0 +1,8 @@
+{
+  "name": "upcebu-intrams",
+  "entrypoint": "public/index.html",
+  "sources": [
+    "public/assets/images/**/*",
+    "bower.json"
+  ]
+}
