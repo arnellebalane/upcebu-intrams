@@ -68,6 +68,15 @@ body {
 
 /** Widgets **/
 
+.widget:not(:first-child) {
+    margin-top: 2rem;
+}
+
+.widget:not(:last-child) {
+    margin-bottom: 2rem;
+}
+
+
 .widget-header {
     padding: 2rem;
 }
