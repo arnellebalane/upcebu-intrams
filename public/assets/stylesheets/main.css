@@ -93,19 +93,26 @@ body {
 
 
 
-/** Team Standing Widget **/
+/** Widget Lists **/
 
-.teams-list {
+.list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
 
-.team-item {
+.list-item {
     display: flex;
     align-items: center;
     padding: 0.5rem 2rem;
+}
+
+
+
+/** Team Standing Widget **/
+
+.team-item {
     font-size: 1.6rem;
 }
 
