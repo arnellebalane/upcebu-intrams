@@ -24,12 +24,14 @@ body {
 .l-sidebar {
     flex-shrink: 0;
     width: 35rem;
+    padding-bottom: 5rem;
     margin-right: 2rem;
 }
 
 
 .l-main {
     flex-grow: 1;
+    padding-bottom: 5rem;
 }
 
 
