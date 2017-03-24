@@ -7,6 +7,7 @@
         <title>UP Cebu Intramurals 2017</title>
 
         <link rel="import" href="vendor/paper-material/paper-material.html">
+        <link rel="import" href="vendor/paper-button/paper-button.html">
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
         <link rel="stylesheet" href="assets/stylesheets/reset.css">
@@ -22,6 +23,45 @@
                     <h1 class="title">Intramurals 2017</h1>
                 </div>
             </header>
+
+            <div class="l-content">
+                <aside class="l-sidebar">
+                    <paper-material class="widget" elevation=1>
+                        <header class="widget-header">
+                            <h1 class="widget-title">Team Standings</h1>
+                        </header>
+                        <main class="widget-body">
+                            <ul class="teams-list">
+                                <li class="team-item team-item--scions">
+                                    <span class="team-icon team-icon--scions"></span>
+                                    <p class="team-name">Scions</p>
+                                    <p class="team-score">00</p>
+                                </li>
+                                <li class="team-item team-item--tycoons">
+                                    <span class="team-icon team-icon--tycoons"></span>
+                                    <p class="team-name">Tycoons</p>
+                                    <p class="team-score">00</p>
+                                </li>
+                                <li class="team-item team-item--bullets">
+                                    <span class="team-icon team-icon--bullets"></span>
+                                    <p class="team-name">Bullets</p>
+                                    <p class="team-score">00</p>
+                                </li>
+                                <li class="team-item team-item--stallions">
+                                    <span class="team-icon team-icon--stallions"></span>
+                                    <p class="team-name">Stallions</p>
+                                    <p class="team-score">00</p>
+                                </li>
+                            </ul>
+                        </main>
+                        <footer class="widget-footer">
+                            <paper-button class="widget-action">View Scoreboard</paper-button>
+                        </footer>
+                    </paper-material>
+                </aside>
+
+                <main class="l-main"></main>
+            </div>
         </div>
     </body>
 </html>
