@@ -1,0 +1,23 @@
+{
+  "name": "upcebu-intrams",
+  "homepage": "https://github.com/arnellebalane/upcebu-intrams",
+  "authors": [
+    "Arnelle Balane <arnellebalane@gmail.com>"
+  ],
+  "description": "up cebu intramurals website",
+  "main": "public/index.html",
+  "keywords": [
+    "intrams",
+    "upcebu",
+    "firebase"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
