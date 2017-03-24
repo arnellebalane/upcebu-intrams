@@ -169,6 +169,42 @@ body {
 
 
 
+/** Upcoming Events Widget **/
+
+.event-item:nth-child(odd) {
+    background-color: #eaeaea;
+}
+
+
+.event-info {
+    margin-right: auto;
+}
+
+
+.event-name {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+
+.event-schedule {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+
+.event-item .team-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.event-item .team-icon:not(:last-of-type) {
+    margin-right: 0.5em;
+}
+
+
+
 /** Team Icons **/
 
 .team-icon {
