@@ -22,6 +22,7 @@ body {
 
 
 .l-sidebar {
+    flex-shrink: 0;
     width: 35rem;
     margin-right: 2rem;
 }
