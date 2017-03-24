@@ -68,6 +68,11 @@ body {
 
 /** Widgets **/
 
+.widget {
+    background-color: #fff;
+    border-radius: 3px;
+}
+
 .widget:not(:first-child) {
     margin-top: 2rem;
 }
