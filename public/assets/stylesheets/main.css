@@ -127,6 +127,8 @@ body {
 /** Team Standing Widget **/
 
 .team-item {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     font-size: 1.6rem;
 }
 
@@ -148,6 +150,8 @@ body {
 
 
 .team-item .team-icon {
+    width: 2rem;
+    height: 2rem;
     margin-right: 1rem;
 }
 
