@@ -1,0 +1,57 @@
+<link rel="import" href="../vendor/polymer/polymer.html">
+
+
+<dom-module id="page-styles">
+    <template>
+        <style>
+            :host {
+                display: flex;
+            }
+
+            aside {
+                flex-shrink: 0;
+                width: 35%;
+                padding-bottom: 5rem;
+                margin-right: 2rem;
+            }
+
+            main {
+                flex-grow: 1;
+                padding-bottom: 5rem;
+            }
+
+            @media all and (max-width: 768px) {
+                :host {
+                    flex-direction: column;
+                }
+
+                aside {
+                    width: auto;
+                    padding-bottom: 2rem;
+                    margin-right: 0;
+                }
+
+                aside.last {
+                    order: 1;
+                    padding-bottom: 5rem;
+                }
+
+                aside.last ~ main {
+                    padding-bottom: 2rem;
+                }
+            }
+
+
+
+            /** Widgets **/
+
+            .widget:not(:first-child) {
+                margin-top: 2rem;
+            }
+
+            .widget:not(:last-child) {
+                margin-bottom: 2rem;
+            }
+        </style>
+    </template>
+</dom-module>

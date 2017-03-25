@@ -23,52 +23,6 @@ paper-material {
 }
 
 
-.l-content {
-    display: flex;
-}
-
-
-.l-sidebar {
-    flex-shrink: 0;
-    width: 35%;
-    padding-bottom: 5rem;
-    margin-right: 2rem;
-}
-
-
-.l-main {
-    flex-grow: 1;
-    padding-bottom: 5rem;
-}
-
-
-@media all and (max-width: 768px) {
-
-    .l-content {
-        flex-direction: column;
-    }
-
-
-    .l-sidebar {
-        width: auto;
-        padding-bottom: 2rem;
-        margin-right: 0;
-    }
-
-
-    .l-sidebar--last {
-        order: 1;
-        padding-bottom: 5rem;
-    }
-
-
-    .l-sidebar--last ~ .l-main {
-        padding-bottom: 2rem;
-    }
-
-}
-
-
 @media all and (max-width: 425px) {
 
     .l-wrap {
@@ -76,18 +30,6 @@ paper-material {
         padding: 0;
     }
 
-}
-
-
-
-/** Widgets **/
-
-.widget:not(:first-child) {
-    margin-top: 2rem;
-}
-
-.widget:not(:last-child) {
-    margin-bottom: 2rem;
 }
 
 
