@@ -3,7 +3,6 @@
   "entrypoint": "public/index.html",
   "shell": "public/index.html",
   "fragments": [
-    "public/scoreboard.html",
     "public/schedule.html"
   ],
   "sources": [
