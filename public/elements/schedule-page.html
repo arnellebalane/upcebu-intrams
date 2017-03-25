@@ -1,0 +1,104 @@
+<link rel="import" href="../vendor/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="page-styles.html">
+<link rel="import" href="schedule-styles.html">
+
+
+<dom-module id="schedule-page">
+    <template>
+        <style include="shared-styles"></style>
+        <style include="page-styles"></style>
+        <style include="schedule-styles"></style>
+
+        <aside class="sidebar last">
+            <team-standings class="widget"></team-standings>
+        </aside>
+
+        <main class="main">
+            <paper-material>
+                <header class="schedule-header">
+                    <nav>
+                        <a class="selected" href="#mon">Mon</a>
+                        <a href="#tue">Tue</a>
+                        <a href="#wed">Wed</a>
+                        <a href="#thu">Thu</a>
+                        <a href="#fri">Fri</a>
+                    </nav>
+                </header>
+                <main class="schedule-body">
+                    <article class="timeslot">
+                        <time datetime="2017-03-27 8:00">8:00</time>
+                        <div class="events">
+                            <div class="event">
+                                <div class="info">
+                                    <p class="name">Cheerdance Competition</p>
+                                    <p class="venue">High School Grounds</p>
+                                </div>
+                                <span class="team-icon team-icon--bullets"></span>
+                                <span class="team-icon team-icon--scions"></span>
+                                <span class="team-icon team-icon--stallions"></span>
+                                <span class="team-icon team-icon--tycoons"></span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeslot">
+                        <time datetime="2017-03-27 9:00">9:00</time>
+                        <div class="events">
+                            <div class="event">
+                                <div class="info">
+                                    <p class="name">Basketball Men - Game 1</p>
+                                </div>
+                                <span class="team-icon team-icon--scions"></span>
+                                <span class="team-icon team-icon--tycoons"></span>
+                            </div>
+                            <div class="event">
+                                <div class="info">
+                                    <p class="name">Volleyball Women - Game 1</p>
+                                    <p class="venue">Volleyball Court</p>
+                                </div>
+                                <span class="team-icon team-icon--bullets"></span>
+                                <span class="team-icon team-icon--stallions"></span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeslot">
+                        <time datetime="2017-03-27 10:00">10:00</time>
+                        <div class="events">
+                            <div class="event">
+                                <div class="info">
+                                    <p class="name">Basketball Men - Game 2</p>
+                                    <p class="venue">Basketball Court</p>
+                                </div>
+                                <span class="team-icon team-icon--scions"></span>
+                                <span class="team-icon team-icon--tycoons"></span>
+                            </div>
+                            <div class="event">
+                                <div class="info">
+                                    <p class="name">Volleyball Women - Game 2</p>
+                                    <p class="venue">Volleyball Court</p>
+                                </div>
+                                <span class="team-icon team-icon--bullets"></span>
+                                <span class="team-icon team-icon--stallions"></span>
+                            </div>
+                            <div class="event">
+                                <div class="info">
+                                    <p class="name">Soccer Women - Game 1</p>
+                                    <p class="venue">Soccer Field</p>
+                                </div>
+                                <span class="team-icon team-icon--scions"></span>
+                                <span class="team-icon team-icon--stallions"></span>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </paper-material>
+        </main>
+    </template>
+</dom-module>
+
+
+<script>
+    Polymer({
+        is: 'schedule-page'
+    });
+</script>
