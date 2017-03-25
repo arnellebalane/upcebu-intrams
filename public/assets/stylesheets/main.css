@@ -51,6 +51,13 @@ paper-material {
 }
 
 
+.site-homelink {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+
 .site-title {
     margin-left: 2rem;
     opacity: 0.75;
