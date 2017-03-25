@@ -1,0 +1,26 @@
+.schedule-nav {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1.4rem 2rem;
+}
+
+
+.schedule-nav-item {
+    display: block;
+    padding: 0.7rem 2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2rem;
+    opacity: 0.75;
+}
+
+.schedule-nav-item:not(:last-child) {
+    margin-right: 1rem;
+}
+
+
+.schedule-nav-item--selected {
+    background-color: #e0e0e0;
+}

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>UP Cebu Intramurals 2017</title>
+        <title>Schedule | UP Cebu Intramurals 2017</title>
 
         <link rel="import" href="vendor/paper-material/paper-material.html">
         <link rel="import" href="vendor/paper-button/paper-button.html">
@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
         <link rel="stylesheet" href="assets/stylesheets/reset.css">
         <link rel="stylesheet" href="assets/stylesheets/main.css">
+        <link rel="stylesheet" href="assets/stylesheets/schedule.css">
     </html>
 
     <body>
@@ -66,7 +67,17 @@
                 </aside>
 
                 <main class="l-main">
-                    <paper-material class="schedule"></paper-material>
+                    <paper-material class="schedule">
+                        <header class="schedule-header">
+                            <nav class="schedule-nav">
+                                <a class="schedule-nav-item schedule-nav-item--selected" href="#mon">Mon</a>
+                                <a class="schedule-nav-item" href="#tue">Tue</a>
+                                <a class="schedule-nav-item" href="#wed">Wed</a>
+                                <a class="schedule-nav-item" href="#thu">Thu</a>
+                                <a class="schedule-nav-item" href="#fri">Fri</a>
+                            </nav>
+                        </header>
+                    </paper-material>
                 </main>
             </div>
         </div>
