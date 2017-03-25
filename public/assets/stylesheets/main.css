@@ -161,10 +161,6 @@ paper-material {
 
 /** Widgets **/
 
-.widget {
-    border-radius: 3px;
-}
-
 .widget:not(:first-child) {
     margin-top: 2rem;
 }
