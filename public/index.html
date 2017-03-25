@@ -12,14 +12,7 @@
                 dom: 'shadow'
             };
         </script>
-        <link rel="import" href="vendor/paper-material/paper-material.html">
-        <link rel="import" href="vendor/paper-button/paper-button.html">
-        <link rel="import" href="vendor/paper-card/paper-card.html">
-        <link rel="import" href="vendor/iron-pages/iron-pages.html">
-        <link rel="import" href="elements/pages/landing-page.html">
-        <link rel="import" href="elements/pages/scoreboard-page.html">
-        <link rel="import" href="elements/pages/schedule-page.html">
-        <link rel="import" href="elements/widgets/site-header.html">
+        <link rel="import" href="elements/upcebu-intrams.html">
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
         <link rel="stylesheet" href="assets/stylesheets/reset.css">
@@ -27,14 +20,6 @@
     </html>
 
     <body>
-        <div class="l-wrap">
-            <site-header></site-header>
-
-            <iron-pages selected="landing" attr-for-selected="data-page">
-                <landing-page data-page="landing"></landing-page>
-                <scoreboard-page data-page="scoreboard"></scoreboard-page>
-                <schedule-page data-page="schedule"></schedule-page>
-            </iron-pages>
-        </div>
+        <upcebu-intrams></upcebu-intrams>
     </body>
 </html>
