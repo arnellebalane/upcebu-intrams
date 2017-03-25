@@ -8,10 +8,27 @@
                 color: #333;
             }
 
-
             paper-material {
                 background-color: #fff;
                 border-radius: 3px;
+            }
+
+
+
+            /** Layouts **/
+
+            .wrap {
+                width: 90vw;
+                max-width: 1024px;
+                padding: 0 2rem;
+                margin: auto;
+            }
+
+            @media all and (max-width: 425px) {
+                .wrap {
+                    width: auto;
+                    padding: 0;
+                }
             }
 
 

@@ -1,6 +1,6 @@
 {
   "name": "upcebu-intrams",
-  "entrypoint": "public/index.html",
+  "entrypoint": "public/elements/upcebu-intrams.html",
   "shell": "public/index.html",
   "sources": [
     "public/assets/images/**/*",

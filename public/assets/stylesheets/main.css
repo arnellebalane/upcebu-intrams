@@ -1,61 +1,20 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+html {
+    font-size: 62.5%;
+}
+
+
 body {
+    height: 100vh;
+    margin: 0;
     font-family: "Roboto", sans-serif;
     font-size: 1.6rem;
     color: #333;
     background-color: #eee;
-}
-
-
-paper-material {
-    background-color: #fff;
-    border-radius: 3px;
-}
-
-
-
-/** Layouts **/
-
-.l-wrap {
-    width: 90vw;
-    max-width: 1024px;
-    padding: 0 2rem;
-    margin: auto;
-}
-
-
-@media all and (max-width: 425px) {
-
-    .l-wrap {
-        width: auto;
-        padding: 0;
-    }
-
-}
-
-
-
-/** Team Icons **/
-
-.team-icon {
-    display: block;
-    width: 3rem;
-    height: 3rem;
-    background-image: linear-gradient(to bottom, #ddd, #ccc);
-    border-radius: 50%;
-}
-
-.team-icon--scions {
-    background-image: linear-gradient(to bottom, rgba(242, 201, 76, 0.45), rgba(242, 201, 76, 1));
-}
-
-.team-icon--tycoons {
-    background-image: linear-gradient(to bottom, rgba(45, 156, 219, 0.45), rgba(45, 156, 219, 1));
-}
-
-.team-icon--bullets {
-    background-image: linear-gradient(to bottom, rgba(33, 150, 83, 0.45), rgba(33, 150, 83, 1));
-}
-
-.team-icon--stallions {
-    background-image: linear-gradient(to bottom, rgba(242, 153, 74, 0.45), rgba(242, 153, 74, 1));
 }
