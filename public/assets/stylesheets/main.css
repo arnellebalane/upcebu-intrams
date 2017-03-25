@@ -1,7 +1,13 @@
 body {
     font-family: "Roboto", sans-serif;
+    font-size: 1.6rem;
     color: #333;
     background-color: #eee;
+}
+
+
+paper-material {
+    background-color: #fff;
 }
 
 
@@ -45,8 +51,16 @@ body {
 }
 
 
+.site-homelink {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+
 .site-title {
     margin-left: 2rem;
+    color: #000;
     opacity: 0.75;
 }
 
@@ -68,11 +82,18 @@ body {
 }
 
 
+.page-title {
+    margin-left: auto;
+    font-size: 2.4rem;
+    font-weight: 400;
+    opacity: 0.75;
+}
+
+
 
 /** Widgets **/
 
 .widget {
-    background-color: #fff;
     border-radius: 3px;
 }
 
@@ -104,6 +125,11 @@ body {
 }
 
 
+.widget-link {
+    text-decoration: none;
+}
+
+
 .widget-action {
     font-size: 1.4rem;
 }
@@ -132,7 +158,6 @@ body {
 .team-item {
     padding-top: 1rem;
     padding-bottom: 1rem;
-    font-size: 1.6rem;
 }
 
 .team-item--scions {
@@ -221,7 +246,6 @@ body {
 
 .article-widget {
     display: block;
-    font-size: 1.6rem;
     color: #333;
     border-radius: 3px;
 }

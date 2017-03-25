@@ -1,0 +1,62 @@
+.scoreboard {
+    display: block;
+    padding: 2rem 0;
+}
+
+
+.table-row {
+    display: flex;
+    background-color: #eaeaea;
+}
+
+.table-row:nth-child(even) {
+    background-color: #f0f0f0;
+}
+
+
+.table-data {
+    flex: 1 1 0;
+    padding: 1rem 0;
+    margin: 0;
+    font-size: 1.4rem;
+    line-height: 2rem;
+}
+
+.table-data:first-child {
+    flex: 2 2 0;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.table-data:not(:first-child) {
+    text-align: center;
+}
+
+.table-data:not(:last-child) {
+    border-right: 1px solid #ccc;
+}
+
+
+.table-header .table-data,
+.table-footer .table-data {
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: 0.75;
+}
+
+
+.table-header .table-data {
+    text-align: center;
+}
+
+
+.table-footer .table-data:not(:first-child) {
+    font-size: 1.4rem;
+}
+
+
+.table-footer {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
