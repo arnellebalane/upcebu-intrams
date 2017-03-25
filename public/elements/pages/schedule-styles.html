@@ -37,15 +37,19 @@
 
             /** Schedule Timeslots **/
 
+            .dateslot:not(.selected) {
+                display: none;
+            }
+
             .timeslot {
                 display: flex;
             }
 
-            .timeslot:not(:first-child) {
+            .timeslot:not(:first-of-type) {
                 margin-top: 1.4rem;
             }
 
-            .timeslot:not(:last-child) {
+            .timeslot:not(:last-of-type) {
                 margin-bottom: 1.4rem;
             }
 
@@ -67,11 +71,11 @@
                 border-radius: 3px;
             }
 
-            .event:not(:first-child) {
+            .event:not(:first-of-type) {
                 margin-top: 3px;
             }
 
-            .event:not(:last-child) {
+            .event:not(:last-of-type) {
                 margin-bottom: 3px;
             }
 

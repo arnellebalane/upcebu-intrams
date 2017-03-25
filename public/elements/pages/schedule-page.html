@@ -1,4 +1,5 @@
 <link rel="import" href="../../vendor/polymer/polymer.html">
+<link rel="import" href="../../vendor/app-route/app-location.html">
 <link rel="import" href="../widgets/team-standings.html">
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="page-styles.html">
@@ -11,6 +12,8 @@
         <style include="page-styles"></style>
         <style include="schedule-styles"></style>
 
+        <app-location route="{{route}}" use-hash-as-path></app-location>
+
         <aside class="sidebar last">
             <team-standings class="widget" data="{{data}}"></team-standings>
         </aside>
@@ -19,78 +22,40 @@
             <paper-material>
                 <header class="schedule-header">
                     <nav>
-                        <a class="selected" href="#mon">Mon</a>
-                        <a href="#tue">Tue</a>
-                        <a href="#wed">Wed</a>
-                        <a href="#thu">Thu</a>
-                        <a href="#fri">Fri</a>
+                        <template is="dom-repeat" items="[[schedule]]" as="date">
+                            <a class$="[[selectIfEqual(scheduleDay, date.key)]]" href$="#[[dayOfWeek(date.key)]]">[[dayOfWeek(date.key)]]</button>
+                        </template>
                     </nav>
                 </header>
                 <main class="schedule-body">
-                    <article class="timeslot">
-                        <time datetime="2017-03-27 8:00">8:00</time>
-                        <div class="events">
-                            <div class="event">
-                                <div class="info">
-                                    <p class="name">Cheerdance Competition</p>
-                                    <p class="venue">High School Grounds</p>
-                                </div>
-                                <span class="team-icon team-icon--bullets"></span>
-                                <span class="team-icon team-icon--scions"></span>
-                                <span class="team-icon team-icon--stallions"></span>
-                                <span class="team-icon team-icon--tycoons"></span>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="timeslot">
-                        <time datetime="2017-03-27 9:00">9:00</time>
-                        <div class="events">
-                            <div class="event">
-                                <div class="info">
-                                    <p class="name">Basketball Men - Game 1</p>
-                                </div>
-                                <span class="team-icon team-icon--scions"></span>
-                                <span class="team-icon team-icon--tycoons"></span>
-                            </div>
-                            <div class="event">
-                                <div class="info">
-                                    <p class="name">Volleyball Women - Game 1</p>
-                                    <p class="venue">Volleyball Court</p>
-                                </div>
-                                <span class="team-icon team-icon--bullets"></span>
-                                <span class="team-icon team-icon--stallions"></span>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="timeslot">
-                        <time datetime="2017-03-27 10:00">10:00</time>
-                        <div class="events">
-                            <div class="event">
-                                <div class="info">
-                                    <p class="name">Basketball Men - Game 2</p>
-                                    <p class="venue">Basketball Court</p>
-                                </div>
-                                <span class="team-icon team-icon--scions"></span>
-                                <span class="team-icon team-icon--tycoons"></span>
-                            </div>
-                            <div class="event">
-                                <div class="info">
-                                    <p class="name">Volleyball Women - Game 2</p>
-                                    <p class="venue">Volleyball Court</p>
-                                </div>
-                                <span class="team-icon team-icon--bullets"></span>
-                                <span class="team-icon team-icon--stallions"></span>
-                            </div>
-                            <div class="event">
-                                <div class="info">
-                                    <p class="name">Soccer Women - Game 1</p>
-                                    <p class="venue">Soccer Field</p>
-                                </div>
-                                <span class="team-icon team-icon--scions"></span>
-                                <span class="team-icon team-icon--stallions"></span>
-                            </div>
-                        </div>
-                    </article>
+                    <template is="dom-repeat" items="[[schedule]]" as="date">
+                        <section class$="dateslot [[selectIfEqual(scheduleDay, date.key)]]">
+
+                            <template is="dom-repeat" items="[[date.items]]" as="timeslot">
+                                <article class="timeslot">
+                                    <time datetime$="[[date.key]] [[timeslot.key]]">[[timeslot.key]]</time>
+                                    <div class="events">
+
+                                        <template is="dom-repeat" items="[[timeslot.items]]" as="event">
+                                            <div class="event">
+                                                <div class="info">
+                                                    <p class="name">[[event.name]]</p>
+                                                    <template is="dom-if" if="[[event.venue]]">
+                                                        <p class="venue">[[event.venue]]</p>
+                                                    </template>
+                                                </div>
+                                                <template is="dom-repeat" items="[[event.teams]]" as="team">
+                                                    <span class$="team-icon team-icon--[[team]]"></span>
+                                                </template>
+                                            </div>
+                                        </template>
+
+                                    </div>
+                                </article>
+                            </template>
+
+                        </section>
+                    </template>
                 </main>
             </paper-material>
         </main>
@@ -100,6 +65,75 @@
 
 <script>
     Polymer({
-        is: 'schedule-page'
+        is: 'schedule-page',
+
+        properties: {
+            schedule: {
+                type: Array,
+                computed: 'computeSchedule(data)'
+            },
+
+            scheduleDay: {
+                type: String,
+                computed: 'computeScheduleDay(route)'
+            }
+        },
+
+        computeSchedule: function(data) {
+            var schedule = data.events.sort(function(a, b) {
+                a = parseDateTime(a.date, a.time);
+                b = parseDateTime(b.date, b.time);
+                return a - b;
+            });
+            schedule = groupByKey(schedule, 'date');
+            schedule.forEach(function(item) {
+                item.items = groupByKey(item.items, 'time');
+            });
+            return schedule;
+        },
+
+        computeScheduleDay: function(route) {
+            return route.path || this.dayOfWeek(this.schedule[0].key);
+        },
+
+        selectIfEqual: function(scheduleDay, dayKey) {
+            // Using this workaround instead of paper-tabs and iron-pages
+            // because they don't work with dynamic content (i.e. dom-repeat)
+            // in their light dom
+            return this.dayOfWeek(dayKey) == scheduleDay ? 'selected' : null;
+        },
+
+        dayOfWeek: function(date) {
+            var days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+            date = parseDateTime(date, '12:00');
+            return days[date.getDay()]; // 0 == Sunday
+        },
+
+        lowercase: function(value) {
+            return String(value).toLowerCase();
+        }
     });
+
+    function parseDateTime(date, time) {
+        var dateSegments = date.split('-');
+        var timeSegments = time.split(':');
+        var year = parseInt(dateSegments[2], 10);
+        var month = parseInt(dateSegments[1], 10) - 1; // 0 == January
+        var day = parseInt(dateSegments[0], 10);
+        var hour = parseInt(timeSegments[0], 10);
+        var minute = parseInt(timeSegments[1], 10);
+        return new Date(year, month, day, hour, minute);
+    }
+
+    function groupByKey(array, key) {
+        var indexes = {};
+        return array.reduce(function(groups, item) {
+            if (!(item[key] in indexes)) {
+                groups.push({ key: item[key], items: [] });
+                indexes[item[key]] = groups.length - 1;
+            }
+            groups[indexes[item[key]]].items.push(item);
+            return groups;
+        }, []);
+    }
 </script>
