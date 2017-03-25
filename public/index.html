@@ -15,6 +15,7 @@
         <link rel="import" href="vendor/paper-material/paper-material.html">
         <link rel="import" href="vendor/paper-button/paper-button.html">
         <link rel="import" href="vendor/paper-card/paper-card.html">
+        <link rel="import" href="vendor/iron-pages/iron-pages.html">
         <link rel="import" href="elements/pages/landing-page.html">
         <link rel="import" href="elements/pages/scoreboard-page.html">
         <link rel="import" href="elements/pages/schedule-page.html">
@@ -28,7 +29,12 @@
     <body>
         <div class="l-wrap">
             <site-header></site-header>
-            <landing-page></landing-page>
+
+            <iron-pages selected="landing" attr-for-selected="data-page">
+                <landing-page data-page="landing"></landing-page>
+                <scoreboard-page data-page="scoreboard"></scoreboard-page>
+                <schedule-page data-page="schedule"></schedule-page>
+            </iron-pages>
         </div>
     </body>
 </html>
