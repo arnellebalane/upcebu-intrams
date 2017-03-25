@@ -34,18 +34,6 @@ paper-material {
 
 
 
-/** Article Widgets **/
-
-article-widget p {
-    opacity: 0.75;
-}
-
-article-widget p:last-child {
-    margin-bottom: 0;
-}
-
-
-
 /** Team Icons **/
 
 .team-icon {
