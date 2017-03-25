@@ -1,0 +1,46 @@
+<link rel="import" href="../vendor/polymer/polymer.html">
+<link rel="import" href="../vendor/paper-card/paper-card.html">
+
+
+<dom-module id="article-widget">
+    <template>
+        <style>
+            :host {
+                display: block;
+                border-radius: 3px;
+            }
+
+            paper-card {
+                display: block;
+                color: #333;
+                border-radius: 3px;
+            }
+
+            h1 {
+                margin: 0;
+                font-size: 2.4rem;
+                font-weight: 400;
+                opacity: 0.75;
+            }
+        </style>
+
+        <paper-card image="{{image}}">
+            <div class="card-content">
+                <h1>{{heading}}</h1>
+                <content></content>
+            </div>
+        </paper-card>
+    </template>
+</dom-module>
+
+
+<script>
+    Polymer({
+        is: 'article-widget',
+
+        properties: {
+            heading: String,
+            image: String
+        }
+    });
+</script>

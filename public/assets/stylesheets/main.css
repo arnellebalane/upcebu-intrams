@@ -94,31 +94,11 @@ paper-material {
 
 /** Article Widgets **/
 
-.article-widget {
-    display: block;
-    color: #333;
-    border-radius: 3px;
-}
-
-
-.article-widget .article-content {
-    padding: 2rem;
-}
-
-
-.article-content .article-title {
-    margin: 0;
-    font-size: 2.4rem;
-    font-weight: 400;
+article-widget p {
     opacity: 0.75;
 }
 
-
-.article-content p {
-    opacity: 0.75;
-}
-
-.article-content p:last-child {
+article-widget p:last-child {
     margin-bottom: 0;
 }
 
