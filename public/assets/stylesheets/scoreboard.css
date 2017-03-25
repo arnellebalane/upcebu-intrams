@@ -20,6 +20,7 @@
     margin: 0;
     font-size: 1.4rem;
     line-height: 2rem;
+    word-break: break-all;
 }
 
 .table-data:first-child {
