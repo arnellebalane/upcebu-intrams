@@ -45,44 +45,17 @@
             </header>
             <main>
                 <ul class="event-list">
-                    <li class="event-item">
-                        <div class="event-info">
-                            <p class="event-name">Cheerdance Competition</p>
-                            <time class="event-schedule" datetime="2017-03-27 07:00">Mon 7:00</time>
-                        </div>
-                    </li>
-                    <li class="event-item">
-                        <div class="event-info">
-                            <p class="event-name">Basketball Men - Game 1</p>
-                            <time class="event-schedule" datetime="2017-03-27 08:00">Mon 8:00</time>
-                        </div>
-                        <span class="team-icon team-icon--scions"></span>
-                        <span class="team-icon team-icon--tycoons"></span>
-                    </li>
-                    <li class="event-item">
-                        <div class="event-info">
-                            <p class="event-name">Volleyball Women - Game 1</p>
-                            <time class="event-schedule" datetime="2017-03-27 08:00">Mon 8:00</time>
-                        </div>
-                        <span class="team-icon team-icon--bullets"></span>
-                        <span class="team-icon team-icon--stallions"></span>
-                    </li>
-                    <li class="event-item">
-                        <div class="event-info">
-                            <p class="event-name">Softball Men - Game 1</p>
-                            <time class="event-schedule" datetime="2017-03-27 09:00">Mon 9:00</time>
-                        </div>
-                        <span class="team-icon team-icon--stallions"></span>
-                        <span class="team-icon team-icon--scions"></span>
-                    </li>
-                    <li class="event-item">
-                        <div class="event-info">
-                            <p class="event-name">Table Tennis Singles - Game 1</p>
-                            <time class="event-schedule" datetime="2017-03-27 10:00">Mon 10:00</time>
-                        </div>
-                        <span class="team-icon team-icon--bullets"></span>
-                        <span class="team-icon team-icon--tycoons"></span>
-                    </li>
+                    <template is="dom-repeat" items="[[events]]">
+                        <li class="event-item">
+                            <div class="event-info">
+                                <p class="event-name">[[item.name]]</p>
+                                <time class="event-schedule" datetime$="[[item.date]] [[item.time]]">[[formatDate(item.date, item.time)]]</time>
+                            </div>
+                            <template is="dom-repeat" items="[[item.teams]]" as="team">
+                                <span class$="team-icon team-icon--[[team]]"></span>
+                            </template>
+                        </li>
+                    </template>
                 </ul>
             </main>
             <footer>
@@ -97,6 +70,43 @@
 
 <script>
     Polymer({
-        is: 'upcoming-events'
+        is: 'upcoming-events',
+
+        properties: {
+            events: {
+                type: Array,
+                computed: 'computeEvents(data)'
+            }
+        },
+
+        computeEvents: function(data) {
+            return data.events.sort(function(a, b) {
+                a = parseDateTime(a.date, a.time);
+                b = parseDateTime(b.date, b.time);
+                return a - b;
+            }).slice(0, 5);
+        },
+
+        formatDate: function(date, time) {
+            var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            date = parseDateTime(date, time);
+            return days[date.getDay()] + ' '
+                + date.getHours() + ':' + leftpad(date.getMinutes());
+        }
     });
+
+    function parseDateTime(date, time) {
+        var dateSegments = date.split('-');
+        var timeSegments = time.split(':');
+        var year = parseInt(dateSegments[2], 10);
+        var month = parseInt(dateSegments[1], 10) - 1; // 0 == January
+        var day = parseInt(dateSegments[0], 10);
+        var hour = parseInt(timeSegments[0], 10);
+        var minute = parseInt(timeSegments[1], 10);
+        return new Date(year, month, day, hour, minute);
+    }
+
+    function leftpad(value) {
+        return value < 10 ? '0' + value : value;
+    }
 </script>
