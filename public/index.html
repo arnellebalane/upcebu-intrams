@@ -15,6 +15,7 @@
         <link rel="import" href="vendor/paper-material/paper-material.html">
         <link rel="import" href="vendor/paper-button/paper-button.html">
         <link rel="import" href="vendor/paper-card/paper-card.html">
+        <link rel="import" href="elements/team-standings.html">
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
         <link rel="stylesheet" href="assets/stylesheets/reset.css">
@@ -35,40 +36,7 @@
 
             <div class="l-content">
                 <aside class="l-sidebar">
-                    <paper-material class="widget">
-                        <header class="widget-header">
-                            <h1 class="widget-title">Team Standings</h1>
-                        </header>
-                        <main class="widget-body">
-                            <ul class="list teams-list">
-                                <li class="list-item team-item team-item--scions">
-                                    <span class="team-icon team-icon--scions"></span>
-                                    <p class="team-name">Scions</p>
-                                    <p class="team-score">00</p>
-                                </li>
-                                <li class="list-item team-item team-item--tycoons">
-                                    <span class="team-icon team-icon--tycoons"></span>
-                                    <p class="team-name">Tycoons</p>
-                                    <p class="team-score">00</p>
-                                </li>
-                                <li class="list-item team-item team-item--bullets">
-                                    <span class="team-icon team-icon--bullets"></span>
-                                    <p class="team-name">Bullets</p>
-                                    <p class="team-score">00</p>
-                                </li>
-                                <li class="list-item team-item team-item--stallions">
-                                    <span class="team-icon team-icon--stallions"></span>
-                                    <p class="team-name">Stallions</p>
-                                    <p class="team-score">00</p>
-                                </li>
-                            </ul>
-                        </main>
-                        <footer class="widget-footer">
-                            <a class="widget-link" href="/scoreboard" tabindex="-1">
-                                <paper-button class="widget-action">View Scoreboard</paper-button>
-                            </a>
-                        </footer>
-                    </paper-material>
+                    <team-standings></team-standings>
 
                     <paper-material class="widget">
                         <header class="widget-header">
