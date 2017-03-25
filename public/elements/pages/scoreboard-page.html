@@ -1,0 +1,62 @@
+<link rel="import" href="../../vendor/polymer/polymer.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="page-styles.html">
+<link rel="import" href="scoreboard-styles.html">
+
+
+<dom-module id="scoreboard-page">
+    <template>
+        <style include="shared-styles"></style>
+        <style include="page-styles"></style>
+        <style include="scoreboard-styles"></style>
+
+        <main class="main">
+            <paper-material class="scoreboard">
+                <article class="table">
+                    <header class="table-row">
+                        <p class="table-data">Event Name</p>
+                        <p class="table-data">Bullets</p>
+                        <p class="table-data">Scions</p>
+                        <p class="table-data">Stallions</p>
+                        <p class="table-data">Tycoons</p>
+                    </header>
+                    <div class="table-row">
+                        <p class="table-data">Basketball Men</p>
+                        <p class="table-data team--bullets"></p>
+                        <p class="table-data team--scions"></p>
+                        <p class="table-data team--stallions"></p>
+                        <p class="table-data team--tycoons"></p>
+                    </div>
+                    <div class="table-row">
+                        <p class="table-data">Basketball Women</p>
+                        <p class="table-data team--bullets"></p>
+                        <p class="table-data team--scions"></p>
+                        <p class="table-data team--stallions"></p>
+                        <p class="table-data team--tycoons"></p>
+                    </div>
+                    <div class="table-row">
+                        <p class="table-data">Volleyball Women</p>
+                        <p class="table-data team--bullets"></p>
+                        <p class="table-data team--scions"></p>
+                        <p class="table-data team--stallions"></p>
+                        <p class="table-data team--tycoons"></p>
+                    </div>
+                    <footer class="table-row">
+                        <p class="table-data">Total Points</p>
+                        <p class="table-data team--bullets">0</p>
+                        <p class="table-data team--scions">0</p>
+                        <p class="table-data team--stallions">0</p>
+                        <p class="table-data team--tycoons">0</p>
+                    </footer>
+                </article>
+            </paper-material>
+        </main>
+    </template>
+</dom-module>
+
+
+<script>
+    Polymer({
+        is: 'scoreboard-page'
+    });
+</script>

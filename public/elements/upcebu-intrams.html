@@ -1,0 +1,45 @@
+<link rel="import" href="../vendor/polymer/polymer.html">
+<link rel="import" href="../vendor/app-route/app-location.html">
+<link rel="import" href="../vendor/iron-pages/iron-pages.html">
+<link rel="import" href="pages/landing-page.html">
+<link rel="import" href="pages/scoreboard-page.html">
+<link rel="import" href="pages/schedule-page.html">
+<link rel="import" href="widgets/site-header.html">
+<link rel="import" href="shared-styles.html">
+
+
+<dom-module id="upcebu-intrams">
+    <template>
+        <style include="shared-styles"></style>
+
+        <app-location route="{{route}}"></app-location>
+
+        <div class="wrap">
+            <site-header></site-header>
+
+            <iron-pages selected="{{page}}" attr-for-selected="data-page">
+                <landing-page data-page="landing"></landing-page>
+                <scoreboard-page data-page="scoreboard"></scoreboard-page>
+                <schedule-page data-page="schedule"></schedule-page>
+            </iron-pages>
+        </div>
+    </template>
+</dom-module>
+
+
+<script>
+    Polymer({
+        is: 'upcebu-intrams',
+
+        properties: {
+            page: {
+                type: String,
+                computed: 'computePage(route)'
+            }
+        },
+
+        computePage: function(route) {
+            return route.path.slice(1) || 'landing';
+        }
+    });
+</script>

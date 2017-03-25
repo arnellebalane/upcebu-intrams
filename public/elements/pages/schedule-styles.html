@@ -1,0 +1,102 @@
+<link rel="import" href="../../vendor/polymer/polymer.html">
+
+
+<dom-module id="schedule-styles">
+    <template>
+        <style>
+            .schedule-header {
+                padding: 1.4rem 2rem;
+            }
+
+            .schedule-body {
+                padding: 0 2rem 2rem 2rem;
+            }
+
+            nav {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            nav a {
+                display: block;
+                padding: 0.7rem 2rem;
+                font-size: 1.2rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                text-decoration: none;
+                color: #333;
+                border-radius: 2rem;
+                opacity: 0.75;
+            }
+
+            nav a.selected {
+                background-color: #e0e0e0;
+            }
+
+
+
+            /** Schedule Timeslots **/
+
+            .timeslot {
+                display: flex;
+            }
+
+            .timeslot:not(:first-child) {
+                margin-top: 1.4rem;
+            }
+
+            .timeslot:not(:last-child) {
+                margin-bottom: 1.4rem;
+            }
+
+            .timeslot time {
+                flex: 1 0 0;
+                padding-top: 1rem;
+                font-weight: 700;
+            }
+
+            .events {
+                flex: 5 0 0;
+            }
+
+            .event {
+                display: flex;
+                align-items: center;
+                padding: 1rem 2rem;
+                background-color: #eaeaea;
+                border-radius: 3px;
+            }
+
+            .event:not(:first-child) {
+                margin-top: 3px;
+            }
+
+            .event:not(:last-child) {
+                margin-bottom: 3px;
+            }
+
+            .event .info {
+                margin-right: auto;
+            }
+
+            .event .name,
+            .event .venue {
+                margin: 0;
+            }
+
+            .event .venue {
+                font-size: 1.2rem;
+                opacity: 0.75;
+            }
+
+            .event .team-icon {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+
+            .event .team-icon:not(:last-of-type) {
+                margin-right: 0.5rem;
+            }
+        </style>
+    </template>
+</dom-module>
