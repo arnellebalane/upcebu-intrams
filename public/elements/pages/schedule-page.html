@@ -1,4 +1,5 @@
 <link rel="import" href="../../vendor/polymer/polymer.html">
+<link rel="import" href="../widgets/team-standings.html">
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="page-styles.html">
 <link rel="import" href="schedule-styles.html">
@@ -11,7 +12,7 @@
         <style include="schedule-styles"></style>
 
         <aside class="sidebar last">
-            <team-standings class="widget"></team-standings>
+            <team-standings class="widget" data="{{data}}"></team-standings>
         </aside>
 
         <main class="main">
