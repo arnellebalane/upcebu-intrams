@@ -61,26 +61,13 @@
             </header>
             <main>
                 <ul class="team-list">
-                    <li class="team-item team-scions">
-                        <span class="team-icon team-icon--scions"></span>
-                        <p class="team-name">Scions</p>
-                        <p class="team-score">00</p>
-                    </li>
-                    <li class="team-item team-tycoons">
-                        <span class="team-icon team-icon--tycoons"></span>
-                        <p class="team-name">Tycoons</p>
-                        <p class="team-score">00</p>
-                    </li>
-                    <li class="team-item team-bullets">
-                        <span class="team-icon team-icon--bullets"></span>
-                        <p class="team-name">Bullets</p>
-                        <p class="team-score">00</p>
-                    </li>
-                    <li class="team-item team-stallions">
-                        <span class="team-icon team-icon--stallions"></span>
-                        <p class="team-name">Stallions</p>
-                        <p class="team-score">00</p>
-                    </li>
+                    <template is="dom-repeat" items="[[data.standings]]">
+                        <li class$="team-item team-[[item.team]]">
+                            <span class$="team-icon team-icon--[[item.team]]"></span>
+                            <p class="team-name">[[teamName(item.team)]]</p>
+                            <p class="team-score">[[item.score]]</p>
+                        </li>
+                    </template>
                 </ul>
             </main>
             <footer>
@@ -95,6 +82,10 @@
 
 <script>
     Polymer({
-        is: 'team-standings'
+        is: 'team-standings',
+
+        teamName: function(team) {
+            return this.data.teams[team].name;
+        }
     });
 </script>
