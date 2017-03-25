@@ -42,6 +42,43 @@ paper-material {
 }
 
 
+@media all and (max-width: 768px) {
+
+    .l-content {
+        flex-direction: column;
+    }
+
+
+    .l-sidebar {
+        width: auto;
+        padding-bottom: 2rem;
+        margin-right: 0;
+    }
+
+
+    .l-sidebar--last {
+        order: 1;
+        padding-bottom: 5rem;
+    }
+
+
+    .l-sidebar--last ~ .l-main {
+        padding-bottom: 2rem;
+    }
+
+}
+
+
+@media all and (max-width: 425px) {
+
+    .l-wrap {
+        width: auto;
+        padding: 0;
+    }
+
+}
+
+
 
 /** Site Header **/
 
@@ -88,6 +125,36 @@ paper-material {
     font-size: 2.4rem;
     font-weight: 400;
     opacity: 0.75;
+}
+
+
+@media all and (max-width: 768px) {
+
+    .site-header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+    .page-title {
+        margin-left: initial;
+    }
+
+}
+
+
+@media all and (max-width: 425px) {
+
+    .site-homelink {
+        flex-direction: column;
+        text-align: center;
+    }
+
+
+    .site-logo {
+        margin-bottom: 1rem;
+    }
+
 }
 
 
