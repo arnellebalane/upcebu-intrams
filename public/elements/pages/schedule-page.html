@@ -1,4 +1,5 @@
 <link rel="import" href="../../vendor/polymer/polymer.html">
+<link rel="import" href="../../vendor/app-route/app-location.html">
 <link rel="import" href="../widgets/team-standings.html">
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="page-styles.html">
@@ -11,6 +12,8 @@
         <style include="page-styles"></style>
         <style include="schedule-styles"></style>
 
+        <app-location route="{{route}}" use-hash-as-path></app-location>
+
         <aside class="sidebar last">
             <team-standings class="widget" data="{{data}}"></team-standings>
         </aside>
@@ -20,7 +23,7 @@
                 <header class="schedule-header">
                     <nav>
                         <template is="dom-repeat" items="[[schedule]]" as="date">
-                            <button class$="[[selectIfEqual(scheduleDay, date.key)]]" data-date$="[[date.key]]" on-tap="handleScheduleNavTap">[[dayOfWeek(date.key)]]</button>
+                            <a class$="[[selectIfEqual(scheduleDay, date.key)]]" href$="#[[dayOfWeek(date.key)]]">[[dayOfWeek(date.key)]]</button>
                         </template>
                     </nav>
                 </header>
@@ -72,9 +75,7 @@
 
             scheduleDay: {
                 type: String,
-                value: function() {
-                    return 'sun';
-                }
+                computed: 'computeScheduleDay(route)'
             }
         },
 
@@ -91,15 +92,15 @@
             return schedule;
         },
 
+        computeScheduleDay: function(route) {
+            return route.path || this.dayOfWeek(this.schedule[0].key);
+        },
+
         selectIfEqual: function(scheduleDay, dayKey) {
             // Using this workaround instead of paper-tabs and iron-pages
             // because they don't work with dynamic content (i.e. dom-repeat)
             // in their light dom
             return this.dayOfWeek(dayKey) == scheduleDay ? 'selected' : null;
-        },
-
-        handleScheduleNavTap: function(e) {
-            this.scheduleDay = this.dayOfWeek(e.path[0].dataset.date);
         },
 
         dayOfWeek: function(date) {
