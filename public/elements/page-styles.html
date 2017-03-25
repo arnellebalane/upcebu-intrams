@@ -8,14 +8,14 @@
                 display: flex;
             }
 
-            aside {
+            .sidebar {
                 flex-shrink: 0;
                 width: 35%;
                 padding-bottom: 5rem;
                 margin-right: 2rem;
             }
 
-            main {
+            .main {
                 flex-grow: 1;
                 padding-bottom: 5rem;
             }
@@ -25,18 +25,18 @@
                     flex-direction: column;
                 }
 
-                aside {
+                .sidebar {
                     width: auto;
                     padding-bottom: 2rem;
                     margin-right: 0;
                 }
 
-                aside.last {
+                .sidebar.last {
                     order: 1;
                     padding-bottom: 5rem;
                 }
 
-                aside.last ~ main {
+                .sidebar.last ~ .main {
                     padding-bottom: 2rem;
                 }
             }
