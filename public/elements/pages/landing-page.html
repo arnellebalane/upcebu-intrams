@@ -9,15 +9,6 @@
 <dom-module id="landing-page">
     <style include="shared-styles"></style>
     <style include="page-styles"></style>
-    <style>
-        article-widget p {
-            opacity: 0.75;
-        }
-
-        article-widget p:last-child {
-            margin-bottom: 0;
-        }
-    </style>
 
     <template>
         <aside class="sidebar">
@@ -26,18 +17,9 @@
         </aside>
 
         <main class="main">
-            <article-widget class="widget" heading="Lorem ipsum dolor sit amet">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </article-widget>
-
-            <article-widget class="widget" heading="Lorem ipsum dolor sit amet" image="assets/images/article-banner.png">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </article-widget>
-
-            <article-widget class="widget" heading="Lorem ipsum dolor sit amet">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam ad dignissimos amet quibusdam a nemo dolore expedita est quis nesciunt, laborum quia saepe impedit voluptates tempora architecto in reiciendis ducimus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit consequuntur, amet modi! At quis vero ullam, fugiat cupiditate id! Iusto, suscipit in et reiciendis optio repellat consequuntur consequatur adipisci laborum.</p>
-            </article-widget>
+            <template is="dom-repeat" items="[[articles]]" as="article">
+                <article-widget class="widget" heading="[[article.title]]" image="[[article.image]]" body="[[article.body]]"></article-widget>
+            </template>
         </main>
     </template>
 </dom-module>
@@ -45,6 +27,33 @@
 
 <script>
     Polymer({
-        is: 'landing-page'
+        is: 'landing-page',
+
+        properties: {
+            articles: {
+                type: Array,
+                computed: 'computeArticles(data)'
+            }
+        },
+
+        computeArticles: function(data) {
+            return data.articles.sort(function(a, b) {
+                a = parseDate(a.date);
+                b = parseDate(b.date);
+                return b - a; // latest date first
+            });
+        }
     });
+
+    function parseDate(date) {
+        var datetime = date.split(' ');
+        var dateSegments = datetime[0].split('-');
+        var timeSegments = datetime[1].split(':');
+        var year = parseInt(dateSegments[2], 10);
+        var month = parseInt(dateSegments[1], 10) - 1; // 0 == January
+        var day = parseInt(dateSegments[0], 10);
+        var hour = parseInt(timeSegments[0], 10);
+        var minute = parseInt(timeSegments[1], 10);
+        return new Date(year, month, day, hour, minute);
+    }
 </script>
