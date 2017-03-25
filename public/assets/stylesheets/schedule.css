@@ -1,7 +1,21 @@
+/** Schedule Blocks **/
+
+.schedule-header {
+    padding: 1.4rem 2rem;
+}
+
+
+.schedule-body {
+    padding: 0 2rem 2rem 2rem;
+}
+
+
+
+/** Schedule Navigation **/
+
 .schedule-nav {
     display: flex;
     justify-content: flex-end;
-    padding: 1.4rem 2rem;
 }
 
 
@@ -23,4 +37,82 @@
 
 .schedule-nav-item--selected {
     background-color: #e0e0e0;
+}
+
+
+
+/** Schedule Timeslots **/
+
+.schedule-timeslot {
+    display: flex;
+}
+
+.schedule-timeslot:not(:first-child) {
+    margin-top: 1.4rem;
+}
+
+.schedule-timeslot:not(:last-child) {
+    margin-bottom: 1.4rem;
+}
+
+
+.schedule-time {
+    flex: 1 0 0;
+    padding-top: 1rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+
+.timeslot-events {
+    flex: 5 0 0;
+}
+
+
+.timeslot-event {
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #eaeaea;
+    border-radius: 3px;
+}
+
+.timeslot-event:not(:first-child) {
+    margin-top: 3px;
+}
+
+.timeslot-event:not(:last-child) {
+    margin-bottom: 3px;
+}
+
+
+.timeslot-event .event-info {
+    margin-right: auto;
+}
+
+
+.timeslot-event .event-name,
+.timeslot-event .event-venue {
+    margin: 0;
+}
+
+
+.timeslot-event .event-name {
+    font-size: 1.4rem;
+}
+
+
+.timeslot-event .event-venue {
+    font-size: 1.2rem;
+    opacity: 0.75;
+}
+
+
+.timeslot-event .team-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.timeslot-event .team-icon:not(:last-of-type) {
+    margin-right: 0.5rem;
 }
