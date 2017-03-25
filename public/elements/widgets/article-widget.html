@@ -22,12 +22,20 @@
                 font-weight: 400;
                 opacity: 0.75;
             }
+
+            p {
+                opacity: 0.75;
+            }
+
+            p:last-child {
+                margin-bottom: 0;
+            }
         </style>
 
         <paper-card image="{{image}}">
             <div class="card-content">
                 <h1>{{heading}}</h1>
-                <content></content>
+                <div id="body"></div>
             </div>
         </paper-card>
     </template>
@@ -40,7 +48,12 @@
 
         properties: {
             heading: String,
-            image: String
+            image: String,
+            body: String
+        },
+
+        ready: function() {
+            this.$.body.innerHTML = this.body;
         }
     });
 </script>
