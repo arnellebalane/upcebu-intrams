@@ -20,13 +20,13 @@
                 <header class="schedule-header">
                     <nav>
                         <template is="dom-repeat" items="[[schedule]]" as="date">
-                            <a href$="#[[dayOfWeek(date.key)]]">[[dayOfWeek(date.key)]]</a>
+                            <button class$="[[selectIfEqual(scheduleDay, date.key)]]" data-date$="[[date.key]]" on-tap="handleScheduleNavTap">[[dayOfWeek(date.key)]]</button>
                         </template>
                     </nav>
                 </header>
                 <main class="schedule-body">
                     <template is="dom-repeat" items="[[schedule]]" as="date">
-                        <section class="dateslot" data-date$="[[dayOfWeek(date.key)]]">
+                        <section class$="dateslot [[selectIfEqual(scheduleDay, date.key)]]">
 
                             <template is="dom-repeat" items="[[date.items]]" as="timeslot">
                                 <article class="timeslot">
@@ -68,6 +68,13 @@
             schedule: {
                 type: Array,
                 computed: 'computeSchedule(data)'
+            },
+
+            scheduleDay: {
+                type: String,
+                value: function() {
+                    return 'sun';
+                }
             }
         },
 
@@ -82,6 +89,17 @@
                 item.items = groupByKey(item.items, 'time');
             });
             return schedule;
+        },
+
+        selectIfEqual: function(scheduleDay, dayKey) {
+            // Using this workaround instead of paper-tabs and iron-pages
+            // because they don't work with dynamic content (i.e. dom-repeat)
+            // in their light dom
+            return this.dayOfWeek(dayKey) == scheduleDay ? 'selected' : null;
+        },
+
+        handleScheduleNavTap: function(e) {
+            this.scheduleDay = this.dayOfWeek(e.path[0].dataset.date);
         },
 
         dayOfWeek: function(date) {
