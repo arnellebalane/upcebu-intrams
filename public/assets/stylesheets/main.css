@@ -69,6 +69,11 @@ paper-material {
 }
 
 
+.site-title .title--sub {
+    font-size: 1.6rem;
+}
+
+
 .page-title {
     margin-left: auto;
     font-size: 2.4rem;
