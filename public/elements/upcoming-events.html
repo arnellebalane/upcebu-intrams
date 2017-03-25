@@ -1,0 +1,102 @@
+<link rel="import" href="../vendor/polymer/polymer.html">
+<link rel="import" href="../vendor/paper-material/paper-material.html">
+<link rel="import" href="../vendor/paper-button/paper-button.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="widget-styles.html">
+
+
+<dom-module id="upcoming-events">
+    <template>
+        <style include="shared-styles"></style>
+        <style include="widget-styles"></style>
+        <style>
+            .event-item:nth-child(odd) {
+                background-color: #eaeaea;
+            }
+
+            .event-info {
+                margin-right: auto;
+            }
+
+            .event-name {
+                margin: 0;
+                font-size: 1.4rem;
+            }
+
+            .event-schedule {
+                font-size: 1.2rem;
+                line-height: 1.4;
+                opacity: 0.75;
+            }
+
+            .team-icon {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+
+            .team-icon:not(:last-of-type) {
+                margin-right: 0.5rem;
+            }
+        </style>
+
+        <paper-material>
+            <header>
+                <h1>Upcoming Events</h1>
+            </header>
+            <main>
+                <ul class="event-list">
+                    <li class="event-item">
+                        <div class="event-info">
+                            <p class="event-name">Cheerdance Competition</p>
+                            <time class="event-schedule" datetime="2017-03-27 07:00">Mon 7:00</time>
+                        </div>
+                    </li>
+                    <li class="event-item">
+                        <div class="event-info">
+                            <p class="event-name">Basketball Men - Game 1</p>
+                            <time class="event-schedule" datetime="2017-03-27 08:00">Mon 8:00</time>
+                        </div>
+                        <span class="team-icon team-icon--scions"></span>
+                        <span class="team-icon team-icon--tycoons"></span>
+                    </li>
+                    <li class="event-item">
+                        <div class="event-info">
+                            <p class="event-name">Volleyball Women - Game 1</p>
+                            <time class="event-schedule" datetime="2017-03-27 08:00">Mon 8:00</time>
+                        </div>
+                        <span class="team-icon team-icon--bullets"></span>
+                        <span class="team-icon team-icon--stallions"></span>
+                    </li>
+                    <li class="event-item">
+                        <div class="event-info">
+                            <p class="event-name">Softball Men - Game 1</p>
+                            <time class="event-schedule" datetime="2017-03-27 09:00">Mon 9:00</time>
+                        </div>
+                        <span class="team-icon team-icon--stallions"></span>
+                        <span class="team-icon team-icon--scions"></span>
+                    </li>
+                    <li class="event-item">
+                        <div class="event-info">
+                            <p class="event-name">Table Tennis Singles - Game 1</p>
+                            <time class="event-schedule" datetime="2017-03-27 10:00">Mon 10:00</time>
+                        </div>
+                        <span class="team-icon team-icon--bullets"></span>
+                        <span class="team-icon team-icon--tycoons"></span>
+                    </li>
+                </ul>
+            </main>
+            <footer>
+                <a href="/schedule" tabindex="-1">
+                    <paper-button>View Schedule</paper-button>
+                </a>
+            </footer>
+        </paper-material>
+    </template>
+</dom-module>
+
+
+<script>
+    Polymer({
+        is: 'upcoming-events'
+    });
+</script>

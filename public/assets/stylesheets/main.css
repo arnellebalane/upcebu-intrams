@@ -175,42 +175,6 @@ paper-material {
 
 
 
-/** Upcoming Events Widget **/
-
-.event-item:nth-child(odd) {
-    background-color: #eaeaea;
-}
-
-
-.event-item .event-info {
-    margin-right: auto;
-}
-
-
-.event-item .event-name {
-    margin: 0;
-    font-size: 1.4rem;
-}
-
-
-.event-item .event-schedule {
-    font-size: 1.2rem;
-    line-height: 1.4;
-    opacity: 0.75;
-}
-
-
-.event-item .team-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-}
-
-.event-item .team-icon:not(:last-of-type) {
-    margin-right: 0.5rem;
-}
-
-
-
 /** Article Widgets **/
 
 .article-widget {
