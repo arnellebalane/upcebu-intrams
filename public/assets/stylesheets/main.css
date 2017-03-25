@@ -42,6 +42,32 @@ paper-material {
 }
 
 
+@media all and (max-width: 768px) {
+
+    .l-content {
+        flex-direction: column;
+    }
+
+
+    .l-sidebar {
+        width: auto;
+        padding-bottom: 2rem;
+        margin-right: 0;
+    }
+
+}
+
+
+@media all and (max-width: 425px) {
+
+    .l-wrap {
+        width: auto;
+        padding: 0;
+    }
+
+}
+
+
 
 /** Site Header **/
 
