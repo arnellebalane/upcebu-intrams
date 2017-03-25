@@ -213,18 +213,18 @@ paper-material {
 }
 
 
-.event-info {
+.event-item .event-info {
     margin-right: auto;
 }
 
 
-.event-name {
+.event-item .event-name {
     margin: 0;
     font-size: 1.4rem;
 }
 
 
-.event-schedule {
+.event-item .event-schedule {
     font-size: 1.2rem;
     line-height: 1.4;
     opacity: 0.75;
@@ -237,7 +237,7 @@ paper-material {
 }
 
 .event-item .team-icon:not(:last-of-type) {
-    margin-right: 0.5em;
+    margin-right: 0.5rem;
 }
 
 
