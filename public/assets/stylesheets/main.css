@@ -5,6 +5,11 @@ body {
 }
 
 
+paper-material {
+    background-color: #fff;
+}
+
+
 
 /** Layouts **/
 
@@ -68,11 +73,18 @@ body {
 }
 
 
+.page-title {
+    margin-left: auto;
+    font-size: 2.4rem;
+    font-weight: 400;
+    opacity: 0.75;
+}
+
+
 
 /** Widgets **/
 
 .widget {
-    background-color: #fff;
     border-radius: 3px;
 }
 
