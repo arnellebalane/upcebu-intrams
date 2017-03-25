@@ -18,9 +18,9 @@
             <site-header></site-header>
 
             <iron-pages selected="{{page}}" attr-for-selected="data-page">
-                <landing-page data-page="landing"></landing-page>
-                <scoreboard-page data-page="scoreboard"></scoreboard-page>
-                <schedule-page data-page="schedule"></schedule-page>
+                <landing-page data-page="landing" data="{{data}}"></landing-page>
+                <scoreboard-page data-page="scoreboard" data="{{data}}"></scoreboard-page>
+                <schedule-page data-page="schedule" data="{{data}}"></schedule-page>
             </iron-pages>
         </div>
     </template>
@@ -32,6 +32,122 @@
         is: 'upcebu-intrams',
 
         properties: {
+            data: {
+                type: Object,
+                value: function() {
+                    return {
+                        teams: {
+                            bullets: {
+                                name: 'Bullets',
+                                fullname: 'ArtsComm Bullets'
+                            },
+                            scions: {
+                                name: 'Scions',
+                                fullname: 'Sciences Scions'
+                            },
+                            stallions: {
+                                name: 'Stallions',
+                                fullname: 'SocSci Stallions'
+                            },
+                            tycoons: {
+                                name: 'Tycoons',
+                                fullname: 'Management Tycoons'
+                            }
+                        },
+                        standings: [{
+                            team: 'scions',
+                            score: 100
+                        }, {
+                            team: 'tycoons',
+                            score: 90
+                        }, {
+                            team: 'bullets',
+                            score: 80
+                        }, {
+                            team: 'stallions',
+                            score: 70
+                        }],
+                        events: [{
+                            key: '1',
+                            name: 'Basketball Men - Game 1',
+                            venue: 'Basketball Court',
+                            date: '26-03-2017',
+                            time: '8:00',
+                            teams: ['bullets', 'stallions']
+                        }, {
+                            key: '2',
+                            name: 'Basketball Men - Game 2',
+                            venue: 'Basketball Court',
+                            date: '26-03-2017',
+                            time: '9:00',
+                            teams: ['bullets', 'scions']
+                        }, {
+                            key: '3',
+                            name: 'Table Tennis Doubles - Game 1',
+                            venue: 'AS Lobby',
+                            date: '27-03-2017',
+                            time: '10:00',
+                            teams: ['tycoons', 'bullets']
+                        }, {
+                            key: '4',
+                            name: 'Basketball Men - Championship',
+                            venue: 'Basketball Court',
+                            date: '28-03-2017',
+                            time: '8:00',
+                            teams: ['scions', 'stallions']
+                        }, {
+                            key: '5',
+                            name: 'Volleyball Women - Game 1',
+                            venue: 'Volleyball Court',
+                            date: '26-03-2017',
+                            time: '8:00',
+                            teams: ['bullets', 'scions']
+                        }, {
+                            key: '6',
+                            name: 'Cheerdance Competition',
+                            venue: 'High School Grounds',
+                            date: '26-03-2017',
+                            time: '7:00',
+                            teams: ['bullets', 'scions', 'stallions', 'tycoons']
+                        }],
+                        scores: [{
+                            key: '1',
+                            event: 'Cheerdance Competition'
+                        }, {
+                            key: '2',
+                            event: 'Basketball Men',
+                            teams: {
+                                scions: 25,
+                                tycoons: 20,
+                                bullets: 15,
+                                stallions: 10
+                            }
+                        }, {
+                            key: '3',
+                            event: 'Basketball Women',
+                            teams: {
+                                scions: 10,
+                                tycoons: 25
+                            }
+                        }],
+                        articles: [{
+                            title: 'Lorem ipsum dolor sit amet',
+                            body: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum pariatur, ratione inventore et deserunt praesentium, consequatur delectus veniam odit animi omnis! Animi deleniti recusandae eveniet consectetur ullam unde dolore, amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores qui accusamus porro perspiciatis provident facere voluptates amet impedit quisquam voluptas sunt aliquam, eius magnam, earum ipsam est a non quasi.</p>',
+                            date: '25-03-2017 5:11'
+                        }, {
+                            title: 'Lorem ipsum dolor sit amet',
+                            image: 'assets/images/article-banner.png',
+                            body: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum pariatur, ratione inventore et deserunt praesentium, consequatur delectus veniam odit animi omnis! Animi deleniti recusandae eveniet consectetur ullam unde dolore, amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores qui accusamus porro perspiciatis provident facere voluptates amet impedit quisquam voluptas sunt aliquam, eius magnam, earum ipsam est a non quasi.</p>',
+                            date: '26-03-2017 6:11'
+                        }, {
+                            title: 'Lorem ipsum dolor sit amet',
+                            body: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum pariatur, ratione inventore et deserunt praesentium, consequatur delectus veniam odit animi omnis! Animi deleniti recusandae eveniet consectetur ullam unde dolore, amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores qui accusamus porro perspiciatis provident facere voluptates amet impedit quisquam voluptas sunt aliquam, eius magnam, earum ipsam est a non quasi.</p>',
+                            date: '26-03-2017 5:12'
+                        }]
+                    };
+                }
+            },
+
             page: {
                 type: String,
                 computed: 'computePage(route)'
