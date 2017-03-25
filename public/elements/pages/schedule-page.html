@@ -106,7 +106,7 @@
         dayOfWeek: function(date) {
             var days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
             date = parseDateTime(date, '12:00');
-            return days[date.getUTCDay()]; // 0 == Sunday
+            return days[date.getDay()]; // 0 == Sunday
         },
 
         lowercase: function(value) {
