@@ -136,6 +136,15 @@ paper-material {
     }
 
 
+    .page-title {
+        margin-left: initial;
+    }
+
+}
+
+
+@media all and (max-width: 425px) {
+
     .site-homelink {
         flex-direction: column;
         text-align: center;
@@ -144,11 +153,6 @@ paper-material {
 
     .site-logo {
         margin-bottom: 1rem;
-    }
-
-
-    .page-title {
-        margin-left: initial;
     }
 
 }
