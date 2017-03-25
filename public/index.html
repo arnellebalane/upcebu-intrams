@@ -6,9 +6,19 @@
 
         <title>UP Cebu Intramurals 2017</title>
 
+        <script src="vendor/webcomponentsjs/webcomponents.js"></script>
+        <script>
+            window.Polymer = {
+                dom: 'shadow'
+            };
+        </script>
         <link rel="import" href="vendor/paper-material/paper-material.html">
         <link rel="import" href="vendor/paper-button/paper-button.html">
         <link rel="import" href="vendor/paper-card/paper-card.html">
+        <link rel="import" href="elements/pages/landing-page.html">
+        <link rel="import" href="elements/pages/scoreboard-page.html">
+        <link rel="import" href="elements/pages/schedule-page.html">
+        <link rel="import" href="elements/widgets/site-header.html">
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
         <link rel="stylesheet" href="assets/stylesheets/reset.css">
@@ -17,131 +27,8 @@
 
     <body>
         <div class="l-wrap">
-            <header class="site-header">
-                <a class="site-homelink" href="/">
-                    <img class="site-logo" src="assets/images/logo.png" alt="UP Logo">
-                    <div class="site-title">
-                        <h2 class="title--sub">University of the Philippines Cebu</h2>
-                        <h1 class="title">Intramurals 2017</h1>
-                    </div>
-                </a>
-            </header>
-
-            <div class="l-content">
-                <aside class="l-sidebar">
-                    <paper-material class="widget">
-                        <header class="widget-header">
-                            <h1 class="widget-title">Team Standings</h1>
-                        </header>
-                        <main class="widget-body">
-                            <ul class="list teams-list">
-                                <li class="list-item team-item team-item--scions">
-                                    <span class="team-icon team-icon--scions"></span>
-                                    <p class="team-name">Scions</p>
-                                    <p class="team-score">00</p>
-                                </li>
-                                <li class="list-item team-item team-item--tycoons">
-                                    <span class="team-icon team-icon--tycoons"></span>
-                                    <p class="team-name">Tycoons</p>
-                                    <p class="team-score">00</p>
-                                </li>
-                                <li class="list-item team-item team-item--bullets">
-                                    <span class="team-icon team-icon--bullets"></span>
-                                    <p class="team-name">Bullets</p>
-                                    <p class="team-score">00</p>
-                                </li>
-                                <li class="list-item team-item team-item--stallions">
-                                    <span class="team-icon team-icon--stallions"></span>
-                                    <p class="team-name">Stallions</p>
-                                    <p class="team-score">00</p>
-                                </li>
-                            </ul>
-                        </main>
-                        <footer class="widget-footer">
-                            <a class="widget-link" href="/scoreboard" tabindex="-1">
-                                <paper-button class="widget-action">View Scoreboard</paper-button>
-                            </a>
-                        </footer>
-                    </paper-material>
-
-                    <paper-material class="widget">
-                        <header class="widget-header">
-                            <h1 class="widget-title">Upcoming Events</h1>
-                        </header>
-                        <main class="widget-body">
-                            <ul class="list events-list">
-                                <li class="list-item event-item">
-                                    <div class="event-info">
-                                        <p class="event-name">Cheerdance Competition</p>
-                                        <time class="event-schedule" datetime="2017-03-27 07:00">Mon 7:00</time>
-                                    </div>
-                                </li>
-                                <li class="list-item event-item">
-                                    <div class="event-info">
-                                        <p class="event-name">Basketball Men - Game 1</p>
-                                        <time class="event-schedule" datetime="2017-03-27 08:00">Mon 8:00</time>
-                                    </div>
-                                    <span class="team-icon team-icon--scions"></span>
-                                    <span class="team-icon team-icon--tycoons"></span>
-                                </li>
-                                <li class="list-item event-item">
-                                    <div class="event-info">
-                                        <p class="event-name">Volleyball Women - Game 1</p>
-                                        <time class="event-schedule" datetime="2017-03-27 08:00">Mon 8:00</time>
-                                    </div>
-                                    <span class="team-icon team-icon--bullets"></span>
-                                    <span class="team-icon team-icon--stallions"></span>
-                                </li>
-                                <li class="list-item event-item">
-                                    <div class="event-info">
-                                        <p class="event-name">Softball Men - Game 1</p>
-                                        <time class="event-schedule" datetime="2017-03-27 09:00">Mon 9:00</time>
-                                    </div>
-                                    <span class="team-icon team-icon--stallions"></span>
-                                    <span class="team-icon team-icon--scions"></span>
-                                </li>
-                                <li class="list-item event-item">
-                                    <div class="event-info">
-                                        <p class="event-name">Table Tennis Singles - Game 1</p>
-                                        <time class="event-schedule" datetime="2017-03-27 10:00">Mon 10:00</time>
-                                    </div>
-                                    <span class="team-icon team-icon--bullets"></span>
-                                    <span class="team-icon team-icon--tycoons"></span>
-                                </li>
-                            </ul>
-                        </main>
-                        <footer class="widget-footer">
-                            <a class="widget-link" href="/schedule" tabindex="-1">
-                                <paper-button class="widget-action">View Schedule</paper-button>
-                            </a>
-                        </footer>
-                    </paper-material>
-                </aside>
-
-                <main class="l-main">
-                    <paper-card class="widget article-widget">
-                        <div class="card-content article-content">
-                            <h1 class="article-title">Lorem ipsum dolor sit amet</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        </div>
-                    </paper-card>
-
-                    <paper-card class="widget article-widget" image="assets/images/article-banner.png">
-                        <div class="card-content article-content">
-                            <h1 class="article-title">Lorem ipsum dolor sit amet</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        </div>
-                    </paper-card>
-
-                    <paper-card class="widget article-widget">
-                        <div class="card-content article-content">
-                            <h1 class="article-title">Lorem ipsum dolor sit amet</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam ad dignissimos amet quibusdam a nemo dolore expedita est quis nesciunt, laborum quia saepe impedit voluptates tempora architecto in reiciendis ducimus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit consequuntur, amet modi! At quis vero ullam, fugiat cupiditate id! Iusto, suscipit in et reiciendis optio repellat consequuntur consequatur adipisci laborum.</p>
-                        </div>
-                    </paper-card>
-                </main>
-            </div>
+            <site-header></site-header>
+            <landing-page></landing-page>
         </div>
     </body>
 </html>

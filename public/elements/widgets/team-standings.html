@@ -1,0 +1,100 @@
+<link rel="import" href="../../vendor/polymer/polymer.html">
+<link rel="import" href="../../vendor/paper-material/paper-material.html">
+<link rel="import" href="../../vendor/paper-button/paper-button.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="widget-styles.html">
+
+
+<dom-module id="team-standings">
+    <template>
+        <style include="shared-styles"></style>
+        <style include="widget-styles"></style>
+        <style>
+            .team-item {
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+            }
+
+            .team-scions {
+                background-color: rgba(242, 201, 76, 0.25);
+            }
+
+            .team-tycoons {
+                background-color: rgba(45, 156, 219, 0.25);
+            }
+
+            .team-bullets {
+                background-color: rgba(33, 150, 83, 0.25);
+            }
+
+            .team-stallions {
+                background-color: rgba(242, 153, 74, 0.25);
+            }
+
+            .team-icon {
+                width: 2rem;
+                height: 2rem;
+                margin-right: 1rem;
+            }
+
+            .team-name {
+                margin: 0;
+            }
+
+            .team-score {
+                flex-shrink: 0;
+                margin: 0 0 0 auto;
+                font-weight: 700;
+            }
+
+            .team-score::after {
+                content: "pts";
+                margin-left: 3px;
+                font-weight: 400;
+                opacity: 0.5;
+            }
+        </style>
+
+        <paper-material>
+            <header>
+                <h1>Team Standings</h1>
+            </header>
+            <main>
+                <ul class="team-list">
+                    <li class="team-item team-scions">
+                        <span class="team-icon team-icon--scions"></span>
+                        <p class="team-name">Scions</p>
+                        <p class="team-score">00</p>
+                    </li>
+                    <li class="team-item team-tycoons">
+                        <span class="team-icon team-icon--tycoons"></span>
+                        <p class="team-name">Tycoons</p>
+                        <p class="team-score">00</p>
+                    </li>
+                    <li class="team-item team-bullets">
+                        <span class="team-icon team-icon--bullets"></span>
+                        <p class="team-name">Bullets</p>
+                        <p class="team-score">00</p>
+                    </li>
+                    <li class="team-item team-stallions">
+                        <span class="team-icon team-icon--stallions"></span>
+                        <p class="team-name">Stallions</p>
+                        <p class="team-score">00</p>
+                    </li>
+                </ul>
+            </main>
+            <footer>
+                <a href="/scoreboard" tabindex="-1">
+                    <paper-button>View Scoreboard</paper-button>
+                </a>
+            </footer>
+        </paper-material>
+    </template>
+</dom-module>
+
+
+<script>
+    Polymer({
+        is: 'team-standings'
+    });
+</script>
