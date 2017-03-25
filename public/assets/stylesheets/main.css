@@ -55,6 +55,17 @@ paper-material {
         margin-right: 0;
     }
 
+
+    .l-sidebar--last {
+        order: 1;
+        padding-bottom: 5rem;
+    }
+
+
+    .l-sidebar--last ~ .l-main {
+        padding-bottom: 2rem;
+    }
+
 }
 
 
