@@ -6,7 +6,7 @@
     "public": "public",
     "rewrites": [{
       "source": "/scoreboard",
-      "destination": "/scoreboard.html"
+      "destination": "/index.html"
     }, {
       "source": "/schedule",
       "destination": "/schedule.html"
