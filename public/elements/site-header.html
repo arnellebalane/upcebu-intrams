@@ -1,0 +1,87 @@
+<link rel="import" href="../vendor/polymer/polymer.html">
+
+
+<dom-module id="site-header">
+    <template>
+        <style>
+            header {
+                display: flex;
+                align-items: center;
+                padding: 5rem 0;
+            }
+
+            a {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                color: #000;
+            }
+
+            div {
+                margin-left: 2rem;
+                opacity: 0.75;
+            }
+
+            h2,
+            h3 {
+                margin: 0;
+                font-weight: 400;
+            }
+
+            h2 {
+                font-size: 2.4rem;
+            }
+
+            h3 {
+                font-size: 1.6rem;
+            }
+
+            h1 {
+                margin-left: auto;
+                font-size: 2.4rem;
+                font-weight: 400;
+                opacity: 0.75;
+            }
+
+            @media all and (max-width: 768px) {
+                header {
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                h1 {
+                    margin-left: initial;
+                }
+            }
+
+            @media all and (max-width: 425px) {
+                a {
+                    flex-direction: column;
+                    text-align: center;
+                }
+
+                img {
+                    margin-bottom: 1rem;
+                }
+            }
+        </style>
+
+        <header>
+            <a href="/">
+                <img src="../assets/images/logo.png" alt="UP Logo">
+                <div>
+                    <h3>University of the Philippines Cebu</h2>
+                    <h2>Intramurals 2017</h1>
+                </div>
+            </a>
+            <h1>Schedule</h1>
+        </header>
+    </template>
+</dom-module>
+
+
+<script>
+    Polymer({
+        is: 'site-header'
+    });
+</script>
