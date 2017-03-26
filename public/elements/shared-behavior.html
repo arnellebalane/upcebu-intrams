@@ -1,0 +1,27 @@
+<script>
+    if (!('Intrams' in window)) {
+        window.Intrams = {};
+    }
+
+    window.Intrams.SharedBehavior = {
+        _parseDateTime: function(date, time) {
+            var dateSegments = date.split('-');
+            var timeSegments = time.split(':');
+            var year = parseInt(dateSegments[2], 10);
+            var month = parseInt(dateSegments[1], 10) - 1; // 0 == January
+            var day = parseInt(dateSegments[0], 10);
+            var hour = parseInt(timeSegments[0], 10);
+            var minute = parseInt(timeSegments[1], 10);
+            return new Date(year, month, day, hour, minute);
+        },
+
+        _parseDate: function(date) {
+            var datetime = date.split(' ');
+            return this._parseDateTime(datetime[0], datetime[1]);
+        },
+
+        _leftPad: function(value) {
+            return value < 10 ? '0' + value : value;
+        }
+    };
+</script>
