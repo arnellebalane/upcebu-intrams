@@ -24,6 +24,7 @@
         <firebase-query app-name="upcebu-intrams" data="{{_standings}}" path="/standings" order-by-value></firebase-query>
         <firebase-query app-name="upcebu-intrams" data="{{_schedule}}" path="/schedule"></firebase-query>
         <firebase-query app-name="upcebu-intrams" data="{{_articles}}" path="/articles"></firebase-query>
+        <firebase-query app-name="upcebu-intrams" data="{{_events}}" path="/events"></firebase-query>
 
         <div class="wrap">
             <site-header></site-header>
@@ -184,7 +185,8 @@
             'observeTeamsQuery(_teams.splices)',
             'observeStandingsQuery(_standings.splices)',
             'observeScheduleQuery(_schedule.splices)',
-            'observeArticlesQuery(_articles.splices)'
+            'observeArticlesQuery(_articles.splices)',
+            'observeEventsQuery(_events.splices)'
         ],
 
         observeTeamsQuery: function() {
@@ -224,6 +226,17 @@
                 if (this._articles.length) {
                     this.data.articles = this._articles.slice();
                     this.notifyPath('data.articles');
+                }
+            }.bind(this));
+        },
+
+        observeEventsQuery: function() {
+            this.debounce('events', function() {
+                if (this.data.standings.length && this._events.length) {
+                    this.data.scores = this._events.map(function(event) {
+                        return { event: event.name, teams: event.scores };
+                    });
+                    this.notifyPath('data.scores');
                 }
             }.bind(this));
         },
