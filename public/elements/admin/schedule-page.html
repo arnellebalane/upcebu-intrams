@@ -101,6 +101,9 @@
                 </div>
                 <footer>
                     <paper-button raised on-tap="saveSchedule">Save</paper-button>
+                    <template is="dom-if" if="[[key]]">
+                        <paper-button raised on-tap="cancelEdit">Cancel</paper-button>
+                    </template>
                 </footer>
             </form>
         </paper-material>
@@ -229,6 +232,18 @@
         deleteSchedule: function(e) {
             var key = e.path[0].dataset.key;
             this.$.schedules.ref.child(key).remove();
+        },
+
+        cancelEdit: function() {
+            this.name = '';
+            this.venue = '';
+            this.date = '';
+            this.time = '';
+            this.key = '';
+            this.selectedBullets = false;
+            this.selectedScions = false;
+            this.selectedStallions = false;
+            this.selectedTycoons = false;
         }
     });
 </script>
