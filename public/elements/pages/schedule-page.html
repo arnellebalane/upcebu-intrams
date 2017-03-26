@@ -70,17 +70,17 @@
         properties: {
             schedule: {
                 type: Array,
-                computed: 'computeSchedule(data)'
+                computed: 'computeSchedule(data.events)'
             },
 
             scheduleDay: {
                 type: String,
-                computed: 'computeScheduleDay(route)'
+                computed: 'computeScheduleDay(route, schedule)'
             }
         },
 
-        computeSchedule: function(data) {
-            var schedule = data.events.sort(function(a, b) {
+        computeSchedule: function(events) {
+            var schedule = events.sort(function(a, b) {
                 a = parseDateTime(a.date, a.time);
                 b = parseDateTime(b.date, b.time);
                 return a - b;
@@ -92,11 +92,11 @@
             return schedule;
         },
 
-        computeScheduleDay: function(route) {
+        computeScheduleDay: function(route, schedule) {
             if (route.path) {
                 return route.path;
-            } else if (this.schedule.length) {
-                return this.dayOfWeek(this.schedule[0].key);
+            } else if (schedule.length) {
+                return this.dayOfWeek(schedule[0].key);
             }
             return null;
         },
