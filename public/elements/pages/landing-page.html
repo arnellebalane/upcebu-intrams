@@ -37,13 +37,13 @@
         properties: {
             articles: {
                 type: Array,
-                computed: 'computeArticles(data)'
+                computed: 'computeArticles(data.articles)'
             }
         },
 
-        computeArticles: function(data) {
+        computeArticles: function(articles) {
             var self = this;
-            return data.articles.sort(function(a, b) {
+            return articles.sort(function(a, b) {
                 a = self._parseDate(a.date);
                 b = self._parseDate(b.date);
                 return b - a; // latest date first

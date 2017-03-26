@@ -23,6 +23,7 @@
         <firebase-query app-name="upcebu-intrams" data="{{_teams}}" path="/teams"></firebase-query>
         <firebase-query app-name="upcebu-intrams" data="{{_standings}}" path="/standings" order-by-value></firebase-query>
         <firebase-query app-name="upcebu-intrams" data="{{_schedule}}" path="/schedule"></firebase-query>
+        <firebase-query app-name="upcebu-intrams" data="{{_articles}}" path="/articles"></firebase-query>
 
         <div class="wrap">
             <site-header></site-header>
@@ -182,7 +183,8 @@
             // https://github.com/firebase/polymerfire/issues/67
             'observeTeamsQuery(_teams.splices)',
             'observeStandingsQuery(_standings.splices)',
-            'observeScheduleQuery(_schedule.splices)'
+            'observeScheduleQuery(_schedule.splices)',
+            'observeArticlesQuery(_articles.splices)'
         ],
 
         observeTeamsQuery: function() {
@@ -213,6 +215,15 @@
                 if (this._teams.length && this._schedule.length) {
                     this.data.events = this._schedule.slice();
                     this.notifyPath('data.events');
+                }
+            }.bind(this));
+        },
+
+        observeArticlesQuery: function() {
+            this.debounce('articles', function() {
+                if (this._articles.length) {
+                    this.data.articles = this._articles.slice();
+                    this.notifyPath('data.articles');
                 }
             }.bind(this));
         },
