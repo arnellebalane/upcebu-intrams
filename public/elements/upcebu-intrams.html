@@ -1,6 +1,8 @@
 <link rel="import" href="../vendor/polymer/polymer.html">
 <link rel="import" href="../vendor/app-route/app-location.html">
 <link rel="import" href="../vendor/iron-pages/iron-pages.html">
+<link rel="import" href="../vendor/polymerfire/firebase-app.html">
+<link rel="import" href="../vendor/polymerfire/firebase-query.html">
 <link rel="import" href="pages/landing-page.html">
 <link rel="import" href="pages/scoreboard-page.html">
 <link rel="import" href="pages/schedule-page.html">
@@ -13,6 +15,16 @@
         <style include="shared-styles"></style>
 
         <app-location route="{{route}}"></app-location>
+
+        <firebase-app name="upcebu-intrams"
+            auth-domain="upcebu-intrams.firebaseapp.com"
+            database-url="https://upcebu-intrams.firebaseio.com/"
+            api-key="AIzaSyARO9SFwW_KZ-0GP9qX-SMqy8xyFWK2UeA"></firebase-app>
+        <firebase-query app-name="upcebu-intrams" data="{{_teams}}" path="/teams"></firebase-query>
+        <firebase-query app-name="upcebu-intrams" data="{{_standings}}" path="/standings" order-by-value></firebase-query>
+        <firebase-query app-name="upcebu-intrams" data="{{_schedule}}" path="/schedule"></firebase-query>
+        <firebase-query app-name="upcebu-intrams" data="{{_articles}}" path="/articles"></firebase-query>
+        <firebase-query app-name="upcebu-intrams" data="{{_events}}" path="/events"></firebase-query>
 
         <div class="wrap">
             <site-header></site-header>
@@ -36,114 +48,11 @@
                 type: Object,
                 value: function() {
                     return {
-                        teams: {
-                            bullets: {
-                                name: 'Bullets',
-                                fullname: 'ArtsComm Bullets'
-                            },
-                            scions: {
-                                name: 'Scions',
-                                fullname: 'Sciences Scions'
-                            },
-                            stallions: {
-                                name: 'Stallions',
-                                fullname: 'SocSci Stallions'
-                            },
-                            tycoons: {
-                                name: 'Tycoons',
-                                fullname: 'Management Tycoons'
-                            }
-                        },
-                        standings: [{
-                            team: 'scions',
-                            score: 100
-                        }, {
-                            team: 'tycoons',
-                            score: 90
-                        }, {
-                            team: 'bullets',
-                            score: 80
-                        }, {
-                            team: 'stallions',
-                            score: 70
-                        }],
-                        events: [{
-                            key: '1',
-                            name: 'Basketball Men - Game 1',
-                            venue: 'Basketball Court',
-                            date: '26-03-2017',
-                            time: '8:00',
-                            teams: ['bullets', 'stallions']
-                        }, {
-                            key: '2',
-                            name: 'Basketball Men - Game 2',
-                            venue: 'Basketball Court',
-                            date: '26-03-2017',
-                            time: '9:00',
-                            teams: ['bullets', 'scions']
-                        }, {
-                            key: '3',
-                            name: 'Table Tennis Doubles - Game 1',
-                            venue: 'AS Lobby',
-                            date: '27-03-2017',
-                            time: '10:00',
-                            teams: ['tycoons', 'bullets']
-                        }, {
-                            key: '4',
-                            name: 'Basketball Men - Championship',
-                            venue: 'Basketball Court',
-                            date: '28-03-2017',
-                            time: '8:00',
-                            teams: ['scions', 'stallions']
-                        }, {
-                            key: '5',
-                            name: 'Volleyball Women - Game 1',
-                            venue: 'Volleyball Court',
-                            date: '26-03-2017',
-                            time: '8:00',
-                            teams: ['bullets', 'scions']
-                        }, {
-                            key: '6',
-                            name: 'Cheerdance Competition',
-                            venue: 'High School Grounds',
-                            date: '26-03-2017',
-                            time: '7:00',
-                            teams: ['bullets', 'scions', 'stallions', 'tycoons']
-                        }],
-                        scores: [{
-                            key: '1',
-                            event: 'Cheerdance Competition'
-                        }, {
-                            key: '2',
-                            event: 'Basketball Men',
-                            teams: {
-                                scions: 25,
-                                tycoons: 20,
-                                bullets: 15,
-                                stallions: 10
-                            }
-                        }, {
-                            key: '3',
-                            event: 'Basketball Women',
-                            teams: {
-                                scions: 10,
-                                tycoons: 25
-                            }
-                        }],
-                        articles: [{
-                            title: 'Lorem ipsum dolor sit amet',
-                            body: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum pariatur, ratione inventore et deserunt praesentium, consequatur delectus veniam odit animi omnis! Animi deleniti recusandae eveniet consectetur ullam unde dolore, amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores qui accusamus porro perspiciatis provident facere voluptates amet impedit quisquam voluptas sunt aliquam, eius magnam, earum ipsam est a non quasi.</p>',
-                            date: '25-03-2017 5:11'
-                        }, {
-                            title: 'Lorem ipsum dolor sit amet',
-                            image: 'assets/images/article-banner.png',
-                            body: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum pariatur, ratione inventore et deserunt praesentium, consequatur delectus veniam odit animi omnis! Animi deleniti recusandae eveniet consectetur ullam unde dolore, amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores qui accusamus porro perspiciatis provident facere voluptates amet impedit quisquam voluptas sunt aliquam, eius magnam, earum ipsam est a non quasi.</p>',
-                            date: '26-03-2017 6:11'
-                        }, {
-                            title: 'Lorem ipsum dolor sit amet',
-                            body: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum pariatur, ratione inventore et deserunt praesentium, consequatur delectus veniam odit animi omnis! Animi deleniti recusandae eveniet consectetur ullam unde dolore, amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores qui accusamus porro perspiciatis provident facere voluptates amet impedit quisquam voluptas sunt aliquam, eius magnam, earum ipsam est a non quasi.</p>',
-                            date: '26-03-2017 5:12'
-                        }]
+                        teams: {},
+                        standings: [],
+                        events: [],
+                        scores: [],
+                        articles: []
                     };
                 }
             },
@@ -152,6 +61,69 @@
                 type: String,
                 computed: 'computePage(route)'
             }
+        },
+
+        observers: [
+            // Observe changes in the data items themselves, not on the array
+            // that stores the data items.
+            // https://github.com/firebase/polymerfire/issues/67
+            'observeTeamsQuery(_teams.splices)',
+            'observeStandingsQuery(_standings.splices)',
+            'observeScheduleQuery(_schedule.splices)',
+            'observeArticlesQuery(_articles.splices)',
+            'observeEventsQuery(_events.splices)'
+        ],
+
+        observeTeamsQuery: function() {
+            this.debounce('teams', function() {
+                if (this._teams.length) {
+                    this.data.teams = this._teams.reduce(function(teams, team) {
+                        teams[team.$key] = team;
+                        return teams;
+                    }, {});
+                    this.notifyPath('data.teams');
+                }
+            }.bind(this));
+        },
+
+        observeStandingsQuery: function() {
+            this.debounce('standings', function() {
+                if (this._teams.length && this._standings.length) {
+                    this.data.standings = this._standings.map(function(standing) {
+                        return { team: standing.$key, score: standing.$val };
+                    }).reverse(); // Default is in ascending order
+                    this.notifyPath('data.standings');
+                }
+            }.bind(this));
+        },
+
+        observeScheduleQuery: function() {
+            this.debounce('schedule', function() {
+                if (this._teams.length && this._schedule.length) {
+                    this.data.events = this._schedule.slice();
+                    this.notifyPath('data.events');
+                }
+            }.bind(this));
+        },
+
+        observeArticlesQuery: function() {
+            this.debounce('articles', function() {
+                if (this._articles.length) {
+                    this.data.articles = this._articles.slice();
+                    this.notifyPath('data.articles');
+                }
+            }.bind(this));
+        },
+
+        observeEventsQuery: function() {
+            this.debounce('events', function() {
+                if (this.data.standings.length && this._events.length) {
+                    this.data.scores = this._events.map(function(event) {
+                        return { event: event.name, teams: event.scores };
+                    });
+                    this.notifyPath('data.scores');
+                }
+            }.bind(this));
         },
 
         computePage: function(route) {

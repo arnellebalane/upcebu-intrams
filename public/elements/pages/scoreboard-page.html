@@ -32,7 +32,7 @@
                     <footer class="table-row">
                         <p class="table-data">Total Points</p>
                         <template is="dom-repeat" items="[[teams]]" as="team">
-                            <p class$="table-data team--[[teamCode(team.name)]]">[[teamTotalScore(team.name)]]</p>
+                            <p class$="table-data team--[[teamCode(team.name)]]">[[teamTotalScore(team.name, data.standings)]]</p>
                         </template>
                     </footer>
                 </article>
@@ -49,12 +49,12 @@
         properties: {
             teams: {
                 type: Array,
-                computed: 'computeTeams(data)'
+                computed: 'computeTeams(data.teams)'
             }
         },
 
-        computeTeams: function(data) {
-            return Object.keys(data.teams).sort(function(a, b) {
+        computeTeams: function(teams) {
+            return Object.keys(teams).sort(function(a, b) {
                 if (a < b) {
                     return -1;
                 } else if (a > b) {
@@ -62,7 +62,7 @@
                 }
                 return 0;
             }).map(function(key) {
-                return data.teams[key];
+                return teams[key];
             });
         },
 
@@ -74,10 +74,12 @@
             return item.teams ? item.teams[this.teamCode(team)] : null;
         },
 
-        teamTotalScore: function(team) {
-            for (var i = 0; i < this.data.standings.length; i++) {
-                if (this.data.standings[i].team === this.teamCode(team)) {
-                    return this.data.standings[i].score;
+        teamTotalScore: function(team, standings) {
+            // standings data is passed in order to trigger recalculating of
+            // data bindings
+            for (var i = 0; i < standings.length; i++) {
+                if (standings[i].team === this.teamCode(team)) {
+                    return standings[i].score;
                 }
             }
             return 0;
