@@ -2,6 +2,9 @@
   "name": "upcebu-intrams",
   "entrypoint": "public/elements/upcebu-intrams.html",
   "shell": "public/index.html",
+  "fragments": [
+    "public/admin.html"
+  ],
   "sources": [
     "public/assets/images/**/*",
     "bower.json"
