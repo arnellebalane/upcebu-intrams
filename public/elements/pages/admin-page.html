@@ -1,29 +1,21 @@
-<link rel="import" href="../vendor/polymer/polymer.html">
-<link rel="import" href="../vendor/polymerfire/firebase-app.html">
-<link rel="import" href="../vendor/polymerfire/firebase-auth.html">
-<link rel="import" href="../vendor/paper-tabs/paper-tabs.html">
-<link rel="import" href="../vendor/paper-tabs/paper-tab.html">
-<link rel="import" href="../vendor/iron-pages/iron-pages.html">
-<link rel="import" href="admin/login-page.html">
-<link rel="import" href="admin/schedule-page.html">
-<link rel="import" href="admin/scoreboard-page.html">
-<link rel="import" href="widgets/site-header.html">
-<link rel="import" href="shared-styles.html">
+<link rel="import" href="../../vendor/polymer/polymer.html">
+<link rel="import" href="../../vendor/polymerfire/firebase-auth.html">
+<link rel="import" href="../../vendor/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../vendor/paper-tabs/paper-tab.html">
+<link rel="import" href="../../vendor/iron-pages/iron-pages.html">
+<link rel="import" href="../admin/login-page.html">
+<link rel="import" href="../admin/schedule-page-admin.html">
+<link rel="import" href="../admin/scoreboard-page-admin.html">
+<link rel="import" href="../shared-styles.html">
 
 
-<dom-module id="upcebu-intrams-admin">
+<dom-module id="admin-page">
     <template>
         <style include="shared-styles"></style>
 
-        <firebase-app name="upcebu-intrams"
-            auth-domain="upcebu-intrams.firebaseapp.com"
-            database-url="https://upcebu-intrams.firebaseio.com/"
-            api-key="AIzaSyARO9SFwW_KZ-0GP9qX-SMqy8xyFWK2UeA"></firebase-app>
         <firebase-auth id="auth" app-name="upcebu-intrams" user="{{user}}"></firebase-auth>
 
-        <div class="wrap">
-            <site-header></site-header>
-
+        <main class="main">
             <template is="dom-if" if="[[!isSignedIn(user)]]">
                 <login-page on-login="signInAdmin"></login-page>
             </template>
@@ -35,18 +27,18 @@
                 </paper-tabs>
 
                 <iron-pages selected="[[selected]]">
-                    <schedule-page></schedule-page>
-                    <scoreboard-page></scoreboard-page>
+                    <schedule-page-admin></schedule-page-admin>
+                    <scoreboard-page-admin></scoreboard-page-admin>
                 </iron-pages>
             </template>
-        </div>
+        </main>
     </template>
 </dom-module>
 
 
 <script>
     Polymer({
-        is: 'upcebu-intrams-admin',
+        is: 'admin-page',
 
         properties: {
             selected: {
