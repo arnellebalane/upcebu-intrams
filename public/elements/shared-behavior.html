@@ -22,6 +22,18 @@
 
         _leftPad: function(value) {
             return value < 10 ? '0' + value : value;
+        },
+
+        _groupByKey: function(array, key) {
+            var indexes = {};
+            return array.reduce(function(groups, item) {
+                if (!(item[key] in indexes)) {
+                    groups.push({ key: item[key], items: [] });
+                    indexes[item[key]] = groups.length - 1;
+                }
+                groups[indexes[item[key]]].items.push(item);
+                return groups;
+            }, []);
         }
     };
 </script>

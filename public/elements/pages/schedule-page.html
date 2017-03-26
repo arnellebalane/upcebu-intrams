@@ -1,6 +1,7 @@
 <link rel="import" href="../../vendor/polymer/polymer.html">
 <link rel="import" href="../../vendor/app-route/app-location.html">
 <link rel="import" href="../widgets/team-standings.html">
+<link rel="import" href="../shared-behavior.html">
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="page-styles.html">
 <link rel="import" href="schedule-styles.html">
@@ -67,6 +68,10 @@
     Polymer({
         is: 'schedule-page',
 
+        behaviors: [
+            Intrams.SharedBehavior
+        ],
+
         properties: {
             schedule: {
                 type: Array,
@@ -80,14 +85,15 @@
         },
 
         computeSchedule: function(events) {
+            var self = this;
             var schedule = events.sort(function(a, b) {
-                a = parseDateTime(a.date, a.time);
-                b = parseDateTime(b.date, b.time);
+                a = self._parseDateTime(a.date, a.time);
+                b = self._parseDateTime(b.date, b.time);
                 return a - b;
             });
-            schedule = groupByKey(schedule, 'date');
+            schedule = this._groupByKey(schedule, 'date');
             schedule.forEach(function(item) {
-                item.items = groupByKey(item.items, 'time');
+                item.items = self._groupByKey(item.items, 'time');
             });
             return schedule;
         },
@@ -110,7 +116,7 @@
 
         dayOfWeek: function(date) {
             var days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-            date = parseDateTime(date, '12:00');
+            date = this._parseDateTime(date, '12:00');
             return days[date.getDay()]; // 0 == Sunday
         },
 
@@ -118,27 +124,4 @@
             return String(value).toLowerCase();
         }
     });
-
-    function parseDateTime(date, time) {
-        var dateSegments = date.split('-');
-        var timeSegments = time.split(':');
-        var year = parseInt(dateSegments[2], 10);
-        var month = parseInt(dateSegments[1], 10) - 1; // 0 == January
-        var day = parseInt(dateSegments[0], 10);
-        var hour = parseInt(timeSegments[0], 10);
-        var minute = parseInt(timeSegments[1], 10);
-        return new Date(year, month, day, hour, minute);
-    }
-
-    function groupByKey(array, key) {
-        var indexes = {};
-        return array.reduce(function(groups, item) {
-            if (!(item[key] in indexes)) {
-                groups.push({ key: item[key], items: [] });
-                indexes[item[key]] = groups.length - 1;
-            }
-            groups[indexes[item[key]]].items.push(item);
-            return groups;
-        }, []);
-    }
 </script>
