@@ -1,0 +1,68 @@
+<link rel="import" href="../vendor/polymer/polymer.html">
+<link rel="import" href="../vendor/polymerfire/firebase-app.html">
+<link rel="import" href="../vendor/polymerfire/firebase-auth.html">
+<link rel="import" href="../vendor/paper-tabs/paper-tabs.html">
+<link rel="import" href="../vendor/paper-tabs/paper-tab.html">
+<link rel="import" href="../vendor/iron-pages/iron-pages.html">
+<link rel="import" href="admin/login-page.html">
+<link rel="import" href="admin/schedule-page.html">
+<link rel="import" href="admin/scoreboard-page.html">
+<link rel="import" href="widgets/site-header.html">
+<link rel="import" href="shared-styles.html">
+
+
+<dom-module id="upcebu-intrams-admin">
+    <template>
+        <style include="shared-styles"></style>
+
+        <firebase-app name="upcebu-intrams"
+            auth-domain="upcebu-intrams.firebaseapp.com"
+            database-url="https://upcebu-intrams.firebaseio.com/"
+            api-key="AIzaSyARO9SFwW_KZ-0GP9qX-SMqy8xyFWK2UeA"></firebase-app>
+        <firebase-auth id="auth" app-name="upcebu-intrams" user="{{user}}"></firebase-auth>
+
+        <div class="wrap">
+            <site-header></site-header>
+
+            <template is="dom-if" if="[[!isSignedIn(user)]]">
+                <login-page on-login="signInAdmin"></login-page>
+            </template>
+
+            <template is="dom-if" if="[[isSignedIn(user)]]">
+                <paper-tabs selected="{{selected}}">
+                    <paper-tab>Schedule</paper-tab>
+                    <paper-tab>Scoreboard</paper-tab>
+                </paper-tabs>
+
+                <iron-pages selected="[[selected]]">
+                    <schedule-page></schedule-page>
+                    <scoreboard-page></scoreboard-page>
+                </iron-pages>
+            </template>
+        </div>
+    </template>
+</dom-module>
+
+
+<script>
+    Polymer({
+        is: 'upcebu-intrams-admin',
+
+        properties: {
+            selected: {
+                type: Number,
+                value: 0
+            }
+        },
+
+        isSignedIn: function(user) {
+            return this.$.auth.signedIn;
+        },
+
+        signInAdmin: function(e) {
+            this.$.auth.signInWithEmailAndPassword(e.detail.email, e.detail.password).catch(function(error) {
+                e.path[0].error = 'Incorrect login credentials.';
+            });
+        }
+    });
+</script>
