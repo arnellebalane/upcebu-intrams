@@ -186,29 +186,35 @@
         ],
 
         observeTeamsQuery: function() {
-            if (this._teams.length) {
-                this.data.teams = this._teams.reduce(function(teams, team) {
-                    teams[team.$key] = team;
-                    return teams;
-                }, {});
-                this.notifyPath('data.teams');
-            }
+            this.debounce('teams', function() {
+                if (this._teams.length) {
+                    this.data.teams = this._teams.reduce(function(teams, team) {
+                        teams[team.$key] = team;
+                        return teams;
+                    }, {});
+                    this.notifyPath('data.teams');
+                }
+            }.bind(this));
         },
 
         observeStandingsQuery: function() {
-            if (this._teams.length && this._standings.length) {
-                this.data.standings = this._standings.map(function(standing) {
-                    return { team: standing.$key, score: standing.$val };
-                }).reverse(); // Default is in ascending order
-                this.notifyPath('data.standings');
-            }
+            this.debounce('standings', function() {
+                if (this._teams.length && this._standings.length) {
+                    this.data.standings = this._standings.map(function(standing) {
+                        return { team: standing.$key, score: standing.$val };
+                    }).reverse(); // Default is in ascending order
+                    this.notifyPath('data.standings');
+                }
+            }.bind(this));
         },
 
         observeScheduleQuery: function() {
-            if (this._teams.length && this._schedule.length) {
-                this.data.events = this._schedule.slice();
-                this.notifyPath('data.events');
-            }
+            this.debounce('schedule', function() {
+                if (this._teams.length && this._schedule.length) {
+                    this.data.events = this._schedule.slice();
+                    this.notifyPath('data.events');
+                }
+            }.bind(this));
         },
 
         computePage: function(route) {
