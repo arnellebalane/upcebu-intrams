@@ -1,0 +1,138 @@
+<link rel="import" href="../../vendor/polymer/polymer.html">
+<link rel="import" href="../../vendor/polymerfire/firebase-document.html">
+<link rel="import" href="../../vendor/paper-material/paper-material.html">
+<link rel="import" href="../../vendor/paper-input/paper-input.html">
+<link rel="import" href="../../vendor/paper-button/paper-button.html">
+
+
+<dom-module id="scoreboard-page">
+    <template>
+        <style>
+            h1 {
+                margin: 0;
+                font-size: 2.4rem;
+                font-weight: normal;
+            }
+
+            paper-material {
+                padding: 2rem;
+                margin: 2rem auto;
+            }
+
+            main,
+            form {
+                display: flex;
+                align-items: center;
+            }
+
+            form {
+                align-items: center;
+            }
+
+            main:nth-child(even) {
+                background-color: #ccc;
+            }
+
+            main > * {
+                flex: 1 0 0;
+            }
+
+            main > p {
+                padding: 0 1rem;
+                margin: 0;
+            }
+
+            main paper-button {
+                font-size: 1rem;
+                background-color: #fff;
+            }
+
+            paper-input {
+                flex-grow: 1;
+            }
+
+            .team {
+                flex-grow: 0.25;
+                text-align: center;
+            }
+
+            @media all and (max-width: 500px) {
+                main {
+                    flex-direction: column;
+                }
+            }
+        </style>
+
+        <firebase-document id="events" app-name="upcebu-intrams" data="{{_events}}" path="/events"></firebase-document>
+
+        <paper-material>
+            <h1>Add Event</h1>
+            <form id="form" action="#" method="post">
+                <paper-input class="name" type="text" label="Name" value="{{name}}"></paper-input>
+                <paper-button raised on-tap="saveEvent">Save</paper-button>
+            </form>
+        </paper-material>
+
+        <paper-material>
+            <main>
+                <p class="name">Name</p>
+                <p class="team">Bullets</p>
+                <p class="team">Scions</p>
+                <p class="team">Stallions</p>
+                <p class="team">Tycoons</p>
+            </main>
+            <template is="dom-repeat" items="[[events]]">
+                <main>
+                    <p class="name">[[item.name]]</p>
+                    <p class="team"><paper-input value="[[teamScore(item.scores, 'bullets')]]" data-team="bullets" data-key$="[[item.$key]]" on-change="handleScoreChange"></paper-input></p>
+                    <p class="team"><paper-input value="[[teamScore(item.scores, 'scions')]]" data-team="scions" data-key$="[[item.$key]]" on-change="handleScoreChange"></paper-input></p>
+                    <p class="team"><paper-input value="[[teamScore(item.scores, 'stallions')]]" data-team="stallions" data-key$="[[item.$key]]" on-change="handleScoreChange"></paper-input></p>
+                    <p class="team"><paper-input value="[[teamScore(item.scores, 'tycoons')]]" data-team="tycoons" data-key$="[[item.$key]]" on-change="handleScoreChange"></paper-input></p>
+                </main>
+            </template>
+        </paper-material>
+    </template>
+</dom-module>
+
+
+<script>
+    Polymer({
+        is: 'scoreboard-page',
+
+        properties: {
+            events: {
+                type: Array,
+                computed: 'computeEvents(_events.*)'
+            }
+        },
+
+        computeEvents: function() {
+            var self = this;
+            return Object.keys(self._events).map(function(key) {
+                self._events[key].$key = key;
+                return self._events[key];
+            });
+        },
+
+        saveEvent: function() {
+            var self = this;
+            if (this.name.trim()) {
+                this.$.events.ref.push({ name: this.name }).then(function() {
+                    self.name = '';
+                });
+            }
+        },
+
+        teamScore: function(scores, key) {
+            return scores[key] || '';
+        },
+
+        handleScoreChange: function(e) {
+            var input = e.path[0];
+            var key = input.dataset.key;
+            var team = input.dataset.team;
+            var value = input.value;
+            this.$.events.ref.child(key + '/scores/' + team).set(value);
+        }
+    });
+</script>
