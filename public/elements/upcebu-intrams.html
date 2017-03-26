@@ -22,6 +22,7 @@
             api-key="AIzaSyARO9SFwW_KZ-0GP9qX-SMqy8xyFWK2UeA"></firebase-app>
         <firebase-query app-name="upcebu-intrams" data="{{_teams}}" path="/teams"></firebase-query>
         <firebase-query app-name="upcebu-intrams" data="{{_standings}}" path="/standings" order-by-value></firebase-query>
+        <firebase-query app-name="upcebu-intrams" data="{{_schedule}}" path="/schedule"></firebase-query>
 
         <div class="wrap">
             <site-header></site-header>
@@ -180,7 +181,8 @@
             // that stores the data items.
             // https://github.com/firebase/polymerfire/issues/67
             'observeTeamsQuery(_teams.splices)',
-            'observeStandingsQuery(_standings.splices)'
+            'observeStandingsQuery(_standings.splices)',
+            'observeScheduleQuery(_schedule.splices)'
         ],
 
         observeTeamsQuery: function() {
@@ -199,6 +201,13 @@
                     return { team: standing.$key, score: standing.$val };
                 }).reverse(); // Default is in ascending order
                 this.notifyPath('data.standings');
+            }
+        },
+
+        observeScheduleQuery: function() {
+            if (this._teams.length && this._schedule.length) {
+                this.data.events = this._schedule.slice();
+                this.notifyPath('data.events');
             }
         },
 

@@ -80,13 +80,13 @@
         properties: {
             events: {
                 type: Array,
-                computed: 'computeEvents(data)'
+                computed: 'computeEvents(data.events)'
             }
         },
 
-        computeEvents: function(data) {
+        computeEvents: function(events) {
             var self = this;
-            return data.events.sort(function(a, b) {
+            return events.sort(function(a, b) {
                 a = self._parseDateTime(a.date, a.time);
                 b = self._parseDateTime(b.date, b.time);
                 return a - b;
