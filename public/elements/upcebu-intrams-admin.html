@@ -1,7 +1,11 @@
 <link rel="import" href="../vendor/polymer/polymer.html">
 <link rel="import" href="../vendor/polymerfire/firebase-app.html">
 <link rel="import" href="../vendor/polymerfire/firebase-auth.html">
+<link rel="import" href="../vendor/paper-tabs/paper-tabs.html">
+<link rel="import" href="../vendor/paper-tabs/paper-tab.html">
+<link rel="import" href="../vendor/iron-pages/iron-pages.html">
 <link rel="import" href="admin/login-page.html">
+<link rel="import" href="admin/schedule-page.html">
 <link rel="import" href="widgets/site-header.html">
 <link rel="import" href="shared-styles.html">
 
@@ -22,6 +26,18 @@
             <template is="dom-if" if="[[!isSignedIn(user)]]">
                 <login-page on-login="signInAdmin"></login-page>
             </template>
+
+            <template is="dom-if" if="[[isSignedIn(user)]]">
+                <paper-tabs selected="{{selected}}">
+                    <paper-tab>Schedule</paper-tab>
+                    <paper-tab>Scoreboard</paper-tab>
+                </paper-tabs>
+
+                <iron-pages selected="[[selected]]">
+                    <schedule-page></schedule-page>
+                    <div>scoreboard</div>
+                </iron-pages>
+            </template>
         </div>
     </template>
 </dom-module>
@@ -30,6 +46,13 @@
 <script>
     Polymer({
         is: 'upcebu-intrams-admin',
+
+        properties: {
+            selected: {
+                type: Number,
+                value: 0
+            }
+        },
 
         isSignedIn: function(user) {
             return this.$.auth.signedIn;

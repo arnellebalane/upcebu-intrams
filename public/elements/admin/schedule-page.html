@@ -1,0 +1,234 @@
+<link rel="import" href="../../vendor/polymer/polymer.html">
+<link rel="import" href="../../vendor/polymerfire/firebase-document.html">
+<link rel="import" href="../../vendor/paper-material/paper-material.html">
+<link rel="import" href="../../vendor/paper-input/paper-input.html">
+<link rel="import" href="../../vendor/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../vendor/paper-button/paper-button.html">
+<link rel="import" href="../shared-behavior.html">
+
+
+<dom-module id="schedule-page">
+    <template>
+        <style>
+            h1 {
+                margin: 0;
+                font-size: 2.4rem;
+                font-weight: normal;
+            }
+
+            paper-material {
+                padding: 2rem;
+                margin: 2rem auto;
+            }
+
+            main {
+                display: flex;
+                padding: 1rem 0;
+            }
+
+            main:nth-child(even) {
+                background-color: #ccc;
+            }
+
+            main > * {
+                flex: 1 0 0;
+            }
+
+            main > .date,
+            main > .time {
+                flex-grow: 0.5;
+            }
+
+            main > .actions {
+                flex-grow: 0.75;
+            }
+
+            main > p {
+                padding: 0 1rem;
+                margin: 0;
+            }
+
+            main paper-button {
+                font-size: 1rem;
+                background-color: #fff;
+            }
+
+            paper-input:not(:last-child) {
+                margin-right: 1rem;
+            }
+
+            div.teams {
+                margin-top: 1rem;
+            }
+
+            div.teams span {
+                margin-right: 2rem;
+            }
+
+            paper-checkbox {
+                margin-right: 2rem;
+            }
+
+            footer {
+                margin-top: 2rem;
+                text-align: center;
+            }
+
+            @media all and (max-width: 500px) {
+                main {
+                    flex-direction: column;
+                }
+            }
+        </style>
+
+        <firebase-document id="schedules" app-name="upcebu-intrams" data="{{_schedule}}" path="/schedule"></firebase-document>
+
+        <paper-material>
+            <h1>Add Schedule</h1>
+            <form id="form" action="#" method="post">
+                <main>
+                    <paper-input class="name" type="text" label="Name" value="{{name}}"></paper-input>
+                    <paper-input class="venue" type="text" label="Venue" value="{{venue}}"></paper-input>
+                    <paper-input class="date" type="text" label="Date" value="{{date}}"></paper-input>
+                    <paper-input class="time" type="text" label="Time" value="{{time}}"></paper-input>
+                </main>
+                <div class="teams">
+                    <span>Teams:</span>
+                    <paper-checkbox checked="{{selectedBullets}}">Bullets</paper-checkbox>
+                    <paper-checkbox checked="{{selectedScions}}">Scions</paper-checkbox>
+                    <paper-checkbox checked="{{selectedStallions}}">Stallions</paper-checkbox>
+                    <paper-checkbox checked="{{selectedTycoons}}">Tycoons</paper-checkbox>
+                </div>
+                <footer>
+                    <paper-button raised on-tap="saveSchedule">Save</paper-button>
+                </footer>
+            </form>
+        </paper-material>
+
+        <paper-material>
+            <main>
+                <p class="name">Name</p>
+                <p class="venue">Venue</p>
+                <p class="date">Date</p>
+                <p class="time">Time</p>
+                <p class="teams">Teams</p>
+                <p class="actions">Actions</p>
+            </main>
+            <template is="dom-repeat" items="[[schedule]]">
+                <main>
+                    <p class="name">[[item.name]]</p>
+                    <p class="venue">[[item.venue]]</p>
+                    <p class="date">[[item.date]]</p>
+                    <p class="time">[[item.time]]</p>
+                    <p class="teams">[[joinTeams(item.teams)]]</p>
+                    <p class="actions">
+                        <paper-button raised data-key$="[[item.$key]]" on-tap="editSchedule">Edit</paper-button>
+                        <paper-button raised data-key$="[[item.$key]]" on-tap="deleteSchedule">Delete</paper-button>
+                    </p>
+                </main>
+            </template>
+        </paper-material>
+    </template>
+</dom-module>
+
+
+<script>
+    Polymer({
+        is: 'schedule-page',
+
+        behaviors: [
+            Intrams.SharedBehavior
+        ],
+
+        properties: {
+            selectedBullets: {
+                type: Boolean,
+                value: false
+            },
+            selectedScions: {
+                type: Boolean,
+                value: false
+            },
+            selectedStallions: {
+                type: Boolean,
+                value: false
+            },
+            selectedTycoons: {
+                type: Boolean,
+                value: false
+            },
+
+            schedule: {
+                type: Array,
+                computed: 'computeSchedule(_schedule.*)'
+            }
+        },
+
+        computeSchedule: function() {
+            var self = this;
+            return Object.keys(self._schedule).map(function(key) {
+                self._schedule[key].$key = key;
+                return self._schedule[key];
+            }).sort(function(a, b) {
+                a = self._parseDateTime(a.date, a.time);
+                b = self._parseDateTime(b.date, b.time);
+                return a - b;
+            });
+        },
+
+        joinTeams: function(teams) {
+            return teams.join(', ');
+        },
+
+        saveSchedule: function() {
+            var self = this;
+            var schedule = {
+                name: this.name,
+                venue: this.venue,
+                date: this.date,
+                time: this.time,
+                teams: ['bullets', 'scions', 'stallions', 'tycoons'].filter(function(team) {
+                    return self['selected' + team[0].toUpperCase() + team.substring(1)];
+                })
+            };
+            if (!this.key && schedule.name && schedule.date && schedule.time) {
+                var result = this.$.schedules.ref.push(schedule);
+            } else if (this.key) {
+                var result = this.$.schedules.ref.child(this.key).set(schedule);
+            }
+            if (result) {
+                result.then(function() {
+                    self.name = '';
+                    self.venue = '';
+                    self.date = '';
+                    self.time = '';
+                    self.key = '';
+                    self.selectedBullets = false;
+                    self.selectedScions = false;
+                    self.selectedStallions = false;
+                    self.selectedTycoons = false;
+                })
+            }
+        },
+
+        editSchedule: function(e) {
+            var key = e.path[0].dataset.key;
+            var schedule = this._schedule[key];
+            this.name = schedule.name;
+            this.venue = schedule.venue;
+            this.date = schedule.date;
+            this.time = schedule.time;
+            this.key = key;
+            for (var i = 0; i < schedule.teams.length; i++) {
+                var team = schedule.teams[i];
+                this['selected' + team[0].toUpperCase() + team.substring(1)] = true;
+            }
+            document.scrollingElement.scrollTop = 0;
+        },
+
+        deleteSchedule: function(e) {
+            var key = e.path[0].dataset.key;
+            this.$.schedules.ref.child(key).remove();
+        }
+    });
+</script>
