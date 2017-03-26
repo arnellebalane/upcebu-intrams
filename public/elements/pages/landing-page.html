@@ -2,6 +2,7 @@
 <link rel="import" href="../widgets/team-standings.html">
 <link rel="import" href="../widgets/upcoming-events.html">
 <link rel="import" href="../widgets/article-widget.html">
+<link rel="import" href="../shared-behavior.html">
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="page-styles.html">
 
@@ -29,31 +30,24 @@
     Polymer({
         is: 'landing-page',
 
+        behaviors: [
+            Intrams.SharedBehavior
+        ],
+
         properties: {
             articles: {
                 type: Array,
-                computed: 'computeArticles(data)'
+                computed: 'computeArticles(data.articles)'
             }
         },
 
-        computeArticles: function(data) {
-            return data.articles.sort(function(a, b) {
-                a = parseDate(a.date);
-                b = parseDate(b.date);
+        computeArticles: function(articles) {
+            var self = this;
+            return articles.sort(function(a, b) {
+                a = self._parseDate(a.date);
+                b = self._parseDate(b.date);
                 return b - a; // latest date first
             });
         }
     });
-
-    function parseDate(date) {
-        var datetime = date.split(' ');
-        var dateSegments = datetime[0].split('-');
-        var timeSegments = datetime[1].split(':');
-        var year = parseInt(dateSegments[2], 10);
-        var month = parseInt(dateSegments[1], 10) - 1; // 0 == January
-        var day = parseInt(dateSegments[0], 10);
-        var hour = parseInt(timeSegments[0], 10);
-        var minute = parseInt(timeSegments[1], 10);
-        return new Date(year, month, day, hour, minute);
-    }
 </script>
