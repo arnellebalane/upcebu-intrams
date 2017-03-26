@@ -93,7 +93,12 @@
         },
 
         computeScheduleDay: function(route) {
-            return route.path || this.dayOfWeek(this.schedule[0].key);
+            if (route.path) {
+                return route.path;
+            } else if (this.schedule.length) {
+                return this.dayOfWeek(this.schedule[0].key);
+            }
+            return null;
         },
 
         selectIfEqual: function(scheduleDay, dayKey) {
