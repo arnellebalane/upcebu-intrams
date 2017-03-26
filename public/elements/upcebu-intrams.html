@@ -1,6 +1,8 @@
 <link rel="import" href="../vendor/polymer/polymer.html">
 <link rel="import" href="../vendor/app-route/app-location.html">
 <link rel="import" href="../vendor/iron-pages/iron-pages.html">
+<link rel="import" href="../vendor/polymerfire/firebase-app.html">
+<link rel="import" href="../vendor/polymerfire/firebase-query.html">
 <link rel="import" href="pages/landing-page.html">
 <link rel="import" href="pages/scoreboard-page.html">
 <link rel="import" href="pages/schedule-page.html">
@@ -14,13 +16,20 @@
 
         <app-location route="{{route}}"></app-location>
 
+        <firebase-app name="upcebu-intrams"
+            auth-domain="upcebu-intrams.firebaseapp.com"
+            database-url="https://upcebu-intrams.firebaseio.com/"
+            api-key="AIzaSyARO9SFwW_KZ-0GP9qX-SMqy8xyFWK2UeA"></firebase-app>
+        <firebase-query app-name="upcebu-intrams" data="{{_teams}}" path="/teams"></firebase-query>
+        <firebase-query app-name="upcebu-intrams" data="{{_standings}}" path="/standings" order-by-value></firebase-query>
+
         <div class="wrap">
             <site-header></site-header>
 
             <iron-pages selected="{{page}}" attr-for-selected="data-page">
                 <landing-page data-page="landing" data="{{data}}"></landing-page>
-                <scoreboard-page data-page="scoreboard" data="{{data}}"></scoreboard-page>
-                <schedule-page data-page="schedule" data="{{data}}"></schedule-page>
+                <scoreboard-page data-page="scoreboard" data="{{olddata}}"></scoreboard-page>
+                <schedule-page data-page="schedule" data="{{olddata}}"></schedule-page>
             </iron-pages>
         </div>
     </template>
@@ -33,6 +42,18 @@
 
         properties: {
             data: {
+                type: Object,
+                value: function() {
+                    return { teams: {},
+                        standings: [],
+                        events: [],
+                        scores: [],
+                        articles: []
+                    };
+                }
+            },
+
+            olddata: {
                 type: Object,
                 value: function() {
                     return {
@@ -151,6 +172,33 @@
             page: {
                 type: String,
                 computed: 'computePage(route)'
+            }
+        },
+
+        observers: [
+            // Observe changes in the data items themselves, not on the array
+            // that stores the data items.
+            // https://github.com/firebase/polymerfire/issues/67
+            'observeTeamsQuery(_teams.splices)',
+            'observeStandingsQuery(_standings.splices)'
+        ],
+
+        observeTeamsQuery: function() {
+            if (this._teams.length) {
+                this.data.teams = this._teams.reduce(function(teams, team) {
+                    teams[team.$key] = team;
+                    return teams;
+                }, {});
+                this.notifyPath('data.teams');
+            }
+        },
+
+        observeStandingsQuery: function() {
+            if (this._teams.length && this._standings.length) {
+                this.data.standings = this._standings.map(function(standing) {
+                    return { team: standing.$key, score: standing.$val };
+                }).reverse(); // Default is in ascending order
+                this.notifyPath('data.standings');
             }
         },
 
