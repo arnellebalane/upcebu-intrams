@@ -1,0 +1,62 @@
+<link rel="import" href="../../vendor/polymer/polymer.html">
+<link rel="import" href="../../vendor/paper-input/paper-input.html">
+<link rel="import" href="../../vendor/paper-button/paper-button.html">
+
+
+<dom-module id="login-page">
+    <template>
+        <style>
+            h1 {
+                font-size: 2.4rem;
+                font-weight: normal;
+                text-align: center;
+            }
+
+            .error {
+                text-align: center;
+                color: #F44336;
+            }
+
+            form {
+                width: 90vw;
+                max-width: 40rem;
+                margin: auto;
+            }
+
+            footer {
+                text-align: center;
+            }
+        </style>
+
+        <h1>Admin Login</h1>
+        <template is="dom-if" if="[[error]]">
+            <p class="error">[[error]]</p>
+        </template>
+
+        <form id="form" action="#" method="post">
+            <paper-input type="text" label="Email" autofocus value="{{email}}"></paper-input>
+            <paper-input type="password" label="Password" value="{{password}}"></paper-input>
+            <footer>
+                <paper-button raised on-tap="login">Login</paper-button>
+            </footer>
+        </form>
+    </template>
+</dom-module>
+
+
+<script>
+    Polymer({
+        is: 'login-page',
+
+        properties: {
+            error: String
+        },
+
+        login: function() {
+            this.fire('login', {
+                email: this.email,
+                password: this.password
+            });
+        }
+    });
+</script>
