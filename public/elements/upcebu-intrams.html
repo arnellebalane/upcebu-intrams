@@ -70,9 +70,9 @@
             // `.splices` observes changes in the data items themselves, not
             // on the array that stores the data items.
             // https://github.com/firebase/polymerfire/issues/67
-            'observeStandingsQuery(_standings.splices)',
+            'observeStandingsQuery(_standings.splices, _teams.*)',
             'observeTeamsDocument(_teams.*)',
-            'observeScheduleDocument(_schedule.*)',
+            'observeScheduleDocument(_schedule.*, _teams.*)',
             'observeArticlesQuery(_articles.splices)',
             'observeEventsDocument(_events.*, _standings.*)'
         ],
