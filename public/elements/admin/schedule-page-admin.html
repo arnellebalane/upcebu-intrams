@@ -180,7 +180,7 @@
         },
 
         joinTeams: function(teams) {
-            return teams.join(', ');
+            return teams ? teams.join(', ') : '';
         },
 
         saveSchedule: function() {
