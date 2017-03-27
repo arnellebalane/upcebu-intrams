@@ -21,6 +21,8 @@
             </template>
 
             <template is="dom-if" if="[[isSignedIn(user)]]">
+                <paper-button raised on-tap="signOutAdmin">Sign Out</paper-button>
+
                 <paper-tabs selected="{{selected}}">
                     <paper-tab>Schedule</paper-tab>
                     <paper-tab>Scoreboard</paper-tab>
@@ -55,6 +57,10 @@
             this.$.auth.signInWithEmailAndPassword(e.detail.email, e.detail.password).catch(function(error) {
                 e.path[0].error = 'Incorrect login credentials.';
             });
+        },
+
+        signOutAdmin: function() {
+            this.$.auth.signOut();
         }
     });
 </script>
