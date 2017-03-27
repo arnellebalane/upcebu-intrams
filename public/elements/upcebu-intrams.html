@@ -4,6 +4,7 @@
 <link rel="import" href="../vendor/polymerfire/firebase-app.html">
 <link rel="import" href="../vendor/polymerfire/firebase-query.html">
 <link rel="import" href="../vendor/polymerfire/firebase-document.html">
+<link rel="import" href="../vendor/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
 <link rel="import" href="pages/landing-page.html">
 <link rel="import" href="pages/scoreboard-page.html">
 <link rel="import" href="pages/schedule-page.html">
@@ -22,9 +23,13 @@
             auth-domain="upcebu-intrams.firebaseapp.com"
             database-url="https://upcebu-intrams.firebaseio.com/"
             api-key="AIzaSyARO9SFwW_KZ-0GP9qX-SMqy8xyFWK2UeA"></firebase-app>
-        <firebase-document app-name="upcebu-intrams" data="{{_teams}}" path="/teams"></firebase-document>
-        <firebase-document app-name="upcebu-intrams" data="{{_schedule}}" path="/schedule"></firebase-document>
-        <firebase-document app-name="upcebu-intrams" data="{{_events}}" path="/events"></firebase-document>
+        <firebase-document app-name="upcebu-intrams" data="{{_liveTeams}}" path="/teams"></firebase-document>
+        <firebase-document app-name="upcebu-intrams" data="{{_liveSchedule}}" path="/schedule"></firebase-document>
+        <firebase-document app-name="upcebu-intrams" data="{{_liveEvents}}" path="/events"></firebase-document>
+
+        <app-indexeddb-mirror key="teams" data="{{_liveTeams}}" persisted-data="{{_teams}}"></app-indexeddb-mirror>
+        <app-indexeddb-mirror key="schedule" data="{{_liveSchedule}}" persisted-data="{{_schedule}}"></app-indexeddb-mirror>
+        <app-indexeddb-mirror key="events" data="{{_liveEvents}}" persisted-data="{{_events}}"></app-indexeddb-mirror>
 
         <div class="wrap">
             <site-header></site-header>
