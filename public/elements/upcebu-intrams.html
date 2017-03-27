@@ -25,7 +25,6 @@
         <firebase-query app-name="upcebu-intrams" data="{{_standings}}" path="/standings" order-by-value></firebase-query>
         <firebase-document app-name="upcebu-intrams" data="{{_teams}}" path="/teams"></firebase-document>
         <firebase-document app-name="upcebu-intrams" data="{{_schedule}}" path="/schedule"></firebase-document>
-        <firebase-query app-name="upcebu-intrams" data="{{_articles}}" path="/articles"></firebase-query>
         <firebase-document app-name="upcebu-intrams" data="{{_events}}" path="/events"></firebase-document>
 
         <div class="wrap">
@@ -54,8 +53,7 @@
                         teams: {},
                         standings: [],
                         events: [],
-                        scores: [],
-                        articles: []
+                        scores: []
                     };
                 }
             },
@@ -73,7 +71,6 @@
             'observeStandingsQuery(_standings.splices, _teams.*)',
             'observeTeamsDocument(_teams.*)',
             'observeScheduleDocument(_schedule.*, _teams.*)',
-            'observeArticlesQuery(_articles.splices)',
             'observeEventsDocument(_events.*, _standings.*)'
         ],
 
@@ -102,15 +99,6 @@
                 if (this.notEmpty(this._teams) && this.notEmpty(this._schedule)) {
                     this.data.events = this.toArray(this._schedule);
                     this.notifyPath('data.events');
-                }
-            }.bind(this));
-        },
-
-        observeArticlesQuery: function() {
-            this.debounce('articles', function() {
-                if (this._articles.length) {
-                    this.data.articles = this._articles.slice();
-                    this.notifyPath('data.articles');
                 }
             }.bind(this));
         },
