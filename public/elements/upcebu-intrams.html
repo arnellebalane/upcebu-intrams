@@ -26,7 +26,7 @@
         <firebase-document app-name="upcebu-intrams" data="{{_teams}}" path="/teams"></firebase-document>
         <firebase-document app-name="upcebu-intrams" data="{{_schedule}}" path="/schedule"></firebase-document>
         <firebase-query app-name="upcebu-intrams" data="{{_articles}}" path="/articles"></firebase-query>
-        <firebase-query app-name="upcebu-intrams" data="{{_events}}" path="/events"></firebase-query>
+        <firebase-document app-name="upcebu-intrams" data="{{_events}}" path="/events"></firebase-document>
 
         <div class="wrap">
             <site-header></site-header>
@@ -74,7 +74,7 @@
             'observeTeamsDocument(_teams.*)',
             'observeScheduleDocument(_schedule.*)',
             'observeArticlesQuery(_articles.splices)',
-            'observeEventsQuery(_events.splices)'
+            'observeEventsDocument(_events.*, _standings.*)'
         ],
 
         observeStandingsQuery: function() {
@@ -115,12 +115,15 @@
             }.bind(this));
         },
 
-        observeEventsQuery: function() {
+        observeEventsDocument: function() {
             this.debounce('events', function() {
-                if (this.data.standings.length && this._events.length) {
-                    this.data.scores = this._events.map(function(event) {
-                        return { event: event.name, teams: event.scores };
-                    });
+                if (this.notEmpty(this._standings) && this.notEmpty(this._events)) {
+                    this.data.scores = Object.keys(this._events).map(function(key) {
+                        return {
+                            event: this._events[key].name,
+                            teams: this._events[key].scores
+                        };
+                    }.bind(this));
                     this.notifyPath('data.scores');
                 }
             }.bind(this));
