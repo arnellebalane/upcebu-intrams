@@ -4,6 +4,13 @@
   "shell": "public/index.html",
   "sources": [
     "public/assets/images/**/*",
+    "public/assets/manifest.json",
+    "public/sw-import.js",
     "bower.json"
+  ],
+  "includeDependencies": [
+    "public/vendor/platinum-sw/bootstrap/*.js",
+    "public/vendor/platinum-sw/*.js",
+    "public/vendor/sw-toolbox/*.js"
   ]
 }

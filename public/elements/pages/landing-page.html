@@ -17,6 +17,15 @@
         article-widget p:last-child {
             margin-bottom: 0;
         }
+
+        article-widget .theme {
+            font-weight: 700;
+        }
+
+        article-widget .theme::before,
+        article-widget .theme::after {
+            content: "\"";
+        }
     </style>
 
     <template>
@@ -26,8 +35,8 @@
         </aside>
 
         <main class="main">
-            <article-widget class="widget" heading="Please add a static article here" image="/assets/images/article-banner.png">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit voluptate magnam, veniam aliquid vero, quia ea reprehenderit illum debitis culpa, ratione enim sequi nostrum. Optio quia consectetur reiciendis inventore deserunt.</p>
+            <article-widget class="widget" heading="University of the Philippines Cebu Intramural Games 2017" image="/assets/images/upcebu-oblation.jpg">
+                <p class="theme">Kahimsug ug kabaskog - mga sukaranan sa paglambo sa UP Cebu</p>
             </article-widget>
         </main>
     </template>
