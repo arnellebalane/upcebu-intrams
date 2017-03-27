@@ -24,7 +24,7 @@
             api-key="AIzaSyARO9SFwW_KZ-0GP9qX-SMqy8xyFWK2UeA"></firebase-app>
         <firebase-query app-name="upcebu-intrams" data="{{_standings}}" path="/standings" order-by-value></firebase-query>
         <firebase-document app-name="upcebu-intrams" data="{{_teams}}" path="/teams"></firebase-document>
-        <firebase-query app-name="upcebu-intrams" data="{{_schedule}}" path="/schedule"></firebase-query>
+        <firebase-document app-name="upcebu-intrams" data="{{_schedule}}" path="/schedule"></firebase-document>
         <firebase-query app-name="upcebu-intrams" data="{{_articles}}" path="/articles"></firebase-query>
         <firebase-query app-name="upcebu-intrams" data="{{_events}}" path="/events"></firebase-query>
 
@@ -72,7 +72,7 @@
             // https://github.com/firebase/polymerfire/issues/67
             'observeStandingsQuery(_standings.splices)',
             'observeTeamsDocument(_teams.*)',
-            'observeScheduleQuery(_schedule.splices)',
+            'observeScheduleDocument(_schedule.*)',
             'observeArticlesQuery(_articles.splices)',
             'observeEventsQuery(_events.splices)'
         ],
@@ -97,10 +97,10 @@
             }.bind(this));
         },
 
-        observeScheduleQuery: function() {
+        observeScheduleDocument: function() {
             this.debounce('schedule', function() {
-                if (this.notEmpty(this._teams) && this._schedule.length) {
-                    this.data.events = this._schedule.slice();
+                if (this.notEmpty(this._teams) && this.notEmpty(this._schedule)) {
+                    this.data.events = this.toArray(this._schedule);
                     this.notifyPath('data.events');
                 }
             }.bind(this));
@@ -132,6 +132,12 @@
 
         notEmpty: function(object) {
             return Object.keys(object).length > 0;
+        },
+
+        toArray: function(object) {
+            return Object.keys(object).map(function(key) {
+                return object[key];
+            });
         }
     });
 </script>
