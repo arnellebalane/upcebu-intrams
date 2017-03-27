@@ -11,6 +11,7 @@
   "includeDependencies": [
     "public/vendor/platinum-sw/bootstrap/*.js",
     "public/vendor/platinum-sw/*.js",
-    "public/vendor/sw-toolbox/*.js"
+    "public/vendor/sw-toolbox/*.js",
+    "public/vendor/app-storage/app-indexeddb-mirror/*.js"
   ]
 }
