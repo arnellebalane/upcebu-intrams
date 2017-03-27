@@ -3,6 +3,7 @@
 <link rel="import" href="../vendor/iron-pages/iron-pages.html">
 <link rel="import" href="../vendor/polymerfire/firebase-app.html">
 <link rel="import" href="../vendor/polymerfire/firebase-query.html">
+<link rel="import" href="../vendor/polymerfire/firebase-document.html">
 <link rel="import" href="pages/landing-page.html">
 <link rel="import" href="pages/scoreboard-page.html">
 <link rel="import" href="pages/schedule-page.html">
@@ -21,11 +22,10 @@
             auth-domain="upcebu-intrams.firebaseapp.com"
             database-url="https://upcebu-intrams.firebaseio.com/"
             api-key="AIzaSyARO9SFwW_KZ-0GP9qX-SMqy8xyFWK2UeA"></firebase-app>
-        <firebase-query app-name="upcebu-intrams" data="{{_teams}}" path="/teams"></firebase-query>
         <firebase-query app-name="upcebu-intrams" data="{{_standings}}" path="/standings" order-by-value></firebase-query>
-        <firebase-query app-name="upcebu-intrams" data="{{_schedule}}" path="/schedule"></firebase-query>
-        <firebase-query app-name="upcebu-intrams" data="{{_articles}}" path="/articles"></firebase-query>
-        <firebase-query app-name="upcebu-intrams" data="{{_events}}" path="/events"></firebase-query>
+        <firebase-document app-name="upcebu-intrams" data="{{_teams}}" path="/teams"></firebase-document>
+        <firebase-document app-name="upcebu-intrams" data="{{_schedule}}" path="/schedule"></firebase-document>
+        <firebase-document app-name="upcebu-intrams" data="{{_events}}" path="/events"></firebase-document>
 
         <div class="wrap">
             <site-header></site-header>
@@ -53,8 +53,7 @@
                         teams: {},
                         standings: [],
                         events: [],
-                        scores: [],
-                        articles: []
+                        scores: []
                     };
                 }
             },
@@ -66,31 +65,18 @@
         },
 
         observers: [
-            // Observe changes in the data items themselves, not on the array
-            // that stores the data items.
+            // `.splices` observes changes in the data items themselves, not
+            // on the array that stores the data items.
             // https://github.com/firebase/polymerfire/issues/67
-            'observeTeamsQuery(_teams.splices)',
-            'observeStandingsQuery(_standings.splices)',
-            'observeScheduleQuery(_schedule.splices)',
-            'observeArticlesQuery(_articles.splices)',
-            'observeEventsQuery(_events.splices)'
+            'observeStandingsQuery(_standings.splices, _teams.*)',
+            'observeTeamsDocument(_teams.*)',
+            'observeScheduleDocument(_schedule.*, _teams.*)',
+            'observeEventsDocument(_events.*, _standings.*)'
         ],
-
-        observeTeamsQuery: function() {
-            this.debounce('teams', function() {
-                if (this._teams.length) {
-                    this.data.teams = this._teams.reduce(function(teams, team) {
-                        teams[team.$key] = team;
-                        return teams;
-                    }, {});
-                    this.notifyPath('data.teams');
-                }
-            }.bind(this));
-        },
 
         observeStandingsQuery: function() {
             this.debounce('standings', function() {
-                if (this._teams.length && this._standings.length) {
+                if (this.notEmpty(this._teams) && this._standings.length) {
                     this.data.standings = this._standings.map(function(standing) {
                         return { team: standing.$key, score: standing.$val };
                     }).reverse(); // Default is in ascending order
@@ -99,30 +85,33 @@
             }.bind(this));
         },
 
-        observeScheduleQuery: function() {
+        observeTeamsDocument: function() {
+            this.debounce('teams', function() {
+                if (this.notEmpty(this._teams)) {
+                    this.data.teams = Object.assign({}, this._teams);
+                    this.notifyPath('data.teams');
+                }
+            }.bind(this));
+        },
+
+        observeScheduleDocument: function() {
             this.debounce('schedule', function() {
-                if (this._teams.length && this._schedule.length) {
-                    this.data.events = this._schedule.slice();
+                if (this.notEmpty(this._teams) && this.notEmpty(this._schedule)) {
+                    this.data.events = this.toArray(this._schedule);
                     this.notifyPath('data.events');
                 }
             }.bind(this));
         },
 
-        observeArticlesQuery: function() {
-            this.debounce('articles', function() {
-                if (this._articles.length) {
-                    this.data.articles = this._articles.slice();
-                    this.notifyPath('data.articles');
-                }
-            }.bind(this));
-        },
-
-        observeEventsQuery: function() {
+        observeEventsDocument: function() {
             this.debounce('events', function() {
-                if (this.data.standings.length && this._events.length) {
-                    this.data.scores = this._events.map(function(event) {
-                        return { event: event.name, teams: event.scores };
-                    });
+                if (this.notEmpty(this._standings) && this.notEmpty(this._events)) {
+                    this.data.scores = Object.keys(this._events).map(function(key) {
+                        return {
+                            event: this._events[key].name,
+                            teams: this._events[key].scores
+                        };
+                    }.bind(this));
                     this.notifyPath('data.scores');
                 }
             }.bind(this));
@@ -130,6 +119,16 @@
 
         computePage: function(route) {
             return route.path.slice(1) || 'landing';
+        },
+
+        notEmpty: function(object) {
+            return Object.keys(object).length > 0;
+        },
+
+        toArray: function(object) {
+            return Object.keys(object).map(function(key) {
+                return object[key];
+            });
         }
     });
 </script>
