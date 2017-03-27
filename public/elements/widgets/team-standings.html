@@ -1,6 +1,7 @@
 <link rel="import" href="../../vendor/polymer/polymer.html">
 <link rel="import" href="../../vendor/paper-material/paper-material.html">
 <link rel="import" href="../../vendor/paper-button/paper-button.html">
+<link rel="import" href="../../vendor/paper-progress/paper-progress.html">
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="widget-styles.html">
 
@@ -60,6 +61,10 @@
                 <h1>Team Standings</h1>
             </header>
             <main>
+                <template is="dom-if" if="[[showProgressBar(data.standings)]]">
+                    <paper-progress indeterminate></paper-progress>
+                </template>
+
                 <ul class="team-list">
                     <template is="dom-repeat" items="[[data.standings]]">
                         <li class$="team-item team-[[item.team]]">
@@ -86,6 +91,10 @@
 
         teamName: function(team) {
             return this.data.teams[team].name;
+        },
+
+        showProgressBar: function() {
+            return this.data.standings.length === 0;
         }
     });
 </script>
