@@ -3,6 +3,7 @@
 <link rel="import" href="../vendor/iron-pages/iron-pages.html">
 <link rel="import" href="../vendor/polymerfire/firebase-app.html">
 <link rel="import" href="../vendor/polymerfire/firebase-query.html">
+<link rel="import" href="../vendor/polymerfire/firebase-document.html">
 <link rel="import" href="pages/landing-page.html">
 <link rel="import" href="pages/scoreboard-page.html">
 <link rel="import" href="pages/schedule-page.html">
@@ -21,8 +22,8 @@
             auth-domain="upcebu-intrams.firebaseapp.com"
             database-url="https://upcebu-intrams.firebaseio.com/"
             api-key="AIzaSyARO9SFwW_KZ-0GP9qX-SMqy8xyFWK2UeA"></firebase-app>
-        <firebase-query app-name="upcebu-intrams" data="{{_teams}}" path="/teams"></firebase-query>
         <firebase-query app-name="upcebu-intrams" data="{{_standings}}" path="/standings" order-by-value></firebase-query>
+        <firebase-document app-name="upcebu-intrams" data="{{_teams}}" path="/teams"></firebase-document>
         <firebase-query app-name="upcebu-intrams" data="{{_schedule}}" path="/schedule"></firebase-query>
         <firebase-query app-name="upcebu-intrams" data="{{_articles}}" path="/articles"></firebase-query>
         <firebase-query app-name="upcebu-intrams" data="{{_events}}" path="/events"></firebase-query>
@@ -66,31 +67,19 @@
         },
 
         observers: [
-            // Observe changes in the data items themselves, not on the array
-            // that stores the data items.
+            // `.splices` observes changes in the data items themselves, not
+            // on the array that stores the data items.
             // https://github.com/firebase/polymerfire/issues/67
-            'observeTeamsQuery(_teams.splices)',
             'observeStandingsQuery(_standings.splices)',
+            'observeTeamsDocument(_teams.*)',
             'observeScheduleQuery(_schedule.splices)',
             'observeArticlesQuery(_articles.splices)',
             'observeEventsQuery(_events.splices)'
         ],
 
-        observeTeamsQuery: function() {
-            this.debounce('teams', function() {
-                if (this._teams.length) {
-                    this.data.teams = this._teams.reduce(function(teams, team) {
-                        teams[team.$key] = team;
-                        return teams;
-                    }, {});
-                    this.notifyPath('data.teams');
-                }
-            }.bind(this));
-        },
-
         observeStandingsQuery: function() {
             this.debounce('standings', function() {
-                if (this._teams.length && this._standings.length) {
+                if (this.notEmpty(this._teams) && this._standings.length) {
                     this.data.standings = this._standings.map(function(standing) {
                         return { team: standing.$key, score: standing.$val };
                     }).reverse(); // Default is in ascending order
@@ -99,9 +88,18 @@
             }.bind(this));
         },
 
+        observeTeamsDocument: function() {
+            this.debounce('teams', function() {
+                if (this.notEmpty(this._teams)) {
+                    this.data.teams = Object.assign({}, this._teams);
+                    this.notifyPath('data.teams');
+                }
+            }.bind(this));
+        },
+
         observeScheduleQuery: function() {
             this.debounce('schedule', function() {
-                if (this._teams.length && this._schedule.length) {
+                if (this.notEmpty(this._teams) && this._schedule.length) {
                     this.data.events = this._schedule.slice();
                     this.notifyPath('data.events');
                 }
@@ -130,6 +128,10 @@
 
         computePage: function(route) {
             return route.path.slice(1) || 'landing';
+        },
+
+        notEmpty: function(object) {
+            return Object.keys(object).length > 0;
         }
     });
 </script>
