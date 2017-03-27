@@ -13,6 +13,8 @@
                 dom: 'shadow'
             };
         </script>
+        <link rel="import" href="vendor/platinum-sw/platinum-sw-register.html">
+        <link rel="import" href="vendor/platinum-sw/platinum-sw-cache.html">
         <link rel="import" href="elements/upcebu-intrams.html">
 
         <link rel="icon" href="assets/images/icons/36x36.png">
@@ -23,5 +25,9 @@
 
     <body>
         <upcebu-intrams></upcebu-intrams>
+
+        <platinum-sw-register auto-register skip-waiting clients-claim>
+            <platinum-sw-cache></platinum-sw-cache>
+        </platinum-sw-register>
     </body>
 </html>
