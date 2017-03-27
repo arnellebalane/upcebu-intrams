@@ -1,6 +1,7 @@
 <link rel="import" href="../../vendor/polymer/polymer.html">
 <link rel="import" href="../../vendor/paper-material/paper-material.html">
 <link rel="import" href="../../vendor/paper-button/paper-button.html">
+<link rel="import" href="../../vendor/paper-progress/paper-progress.html">
 <link rel="import" href="../shared-behavior.html">
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="widget-styles.html">
@@ -45,6 +46,10 @@
                 <h1>Upcoming Events</h1>
             </header>
             <main>
+                <template is="dom-if" if="[[showProgressBar(events)]]">
+                    <paper-progress indeterminate></paper-progress>
+                </template>
+
                 <ul class="event-list">
                     <template is="dom-repeat" items="[[events]]">
                         <li class="event-item">
@@ -98,6 +103,10 @@
             date = this._parseDateTime(date, time);
             return days[date.getDay()] + ' '
                 + date.getHours() + ':' + this._leftPad(date.getMinutes());
+        },
+
+        showProgressBar: function() {
+            return this.events.length === 0;
         }
     });
 </script>
