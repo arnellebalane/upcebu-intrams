@@ -91,7 +91,11 @@
 
         computeEvents: function(events) {
             var self = this;
-            return events.sort(function(a, b) {
+            return events.filter(function(event) {
+                var date = self._parseDateTime(event.date, event.time);
+                var now = new Date();
+                return date > now;
+            }).sort(function(a, b) {
                 a = self._parseDateTime(a.date, a.time);
                 b = self._parseDateTime(b.date, b.time);
                 return a - b;
