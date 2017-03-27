@@ -2,7 +2,6 @@
 <link rel="import" href="../widgets/team-standings.html">
 <link rel="import" href="../widgets/upcoming-events.html">
 <link rel="import" href="../widgets/article-widget.html">
-<link rel="import" href="../shared-behavior.html">
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="page-styles.html">
 
@@ -10,6 +9,15 @@
 <dom-module id="landing-page">
     <style include="shared-styles"></style>
     <style include="page-styles"></style>
+    <style>
+        article-widget p {
+            opacity: 0.75;
+        }
+
+        article-widget p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
 
     <template>
         <aside class="sidebar">
@@ -18,9 +26,9 @@
         </aside>
 
         <main class="main">
-            <template is="dom-repeat" items="[[articles]]" as="article">
-                <article-widget class="widget" heading="[[article.title]]" image="[[article.image]]" body="[[article.body]]"></article-widget>
-            </template>
+            <article-widget class="widget" heading="Please add a static article here" image="/assets/images/article-banner.png">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit voluptate magnam, veniam aliquid vero, quia ea reprehenderit illum debitis culpa, ratione enim sequi nostrum. Optio quia consectetur reiciendis inventore deserunt.</p>
+            </article-widget>
         </main>
     </template>
 </dom-module>
@@ -28,26 +36,6 @@
 
 <script>
     Polymer({
-        is: 'landing-page',
-
-        behaviors: [
-            Intrams.SharedBehavior
-        ],
-
-        properties: {
-            articles: {
-                type: Array,
-                computed: 'computeArticles(data.articles)'
-            }
-        },
-
-        computeArticles: function(articles) {
-            var self = this;
-            return articles.sort(function(a, b) {
-                a = self._parseDate(a.date);
-                b = self._parseDate(b.date);
-                return b - a; // latest date first
-            });
-        }
+        is: 'landing-page'
     });
 </script>

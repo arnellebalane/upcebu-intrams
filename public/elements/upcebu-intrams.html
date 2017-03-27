@@ -3,9 +3,11 @@
 <link rel="import" href="../vendor/iron-pages/iron-pages.html">
 <link rel="import" href="../vendor/polymerfire/firebase-app.html">
 <link rel="import" href="../vendor/polymerfire/firebase-query.html">
+<link rel="import" href="../vendor/polymerfire/firebase-document.html">
 <link rel="import" href="pages/landing-page.html">
 <link rel="import" href="pages/scoreboard-page.html">
 <link rel="import" href="pages/schedule-page.html">
+<link rel="import" href="pages/admin-page.html">
 <link rel="import" href="widgets/site-header.html">
 <link rel="import" href="shared-styles.html">
 
@@ -20,11 +22,9 @@
             auth-domain="upcebu-intrams.firebaseapp.com"
             database-url="https://upcebu-intrams.firebaseio.com/"
             api-key="AIzaSyARO9SFwW_KZ-0GP9qX-SMqy8xyFWK2UeA"></firebase-app>
-        <firebase-query app-name="upcebu-intrams" data="{{_teams}}" path="/teams"></firebase-query>
-        <firebase-query app-name="upcebu-intrams" data="{{_standings}}" path="/standings" order-by-value></firebase-query>
-        <firebase-query app-name="upcebu-intrams" data="{{_schedule}}" path="/schedule"></firebase-query>
-        <firebase-query app-name="upcebu-intrams" data="{{_articles}}" path="/articles"></firebase-query>
-        <firebase-query app-name="upcebu-intrams" data="{{_events}}" path="/events"></firebase-query>
+        <firebase-document app-name="upcebu-intrams" data="{{_teams}}" path="/teams"></firebase-document>
+        <firebase-document app-name="upcebu-intrams" data="{{_schedule}}" path="/schedule"></firebase-document>
+        <firebase-document app-name="upcebu-intrams" data="{{_events}}" path="/events"></firebase-document>
 
         <div class="wrap">
             <site-header></site-header>
@@ -33,6 +33,7 @@
                 <landing-page data-page="landing" data="{{data}}"></landing-page>
                 <scoreboard-page data-page="scoreboard" data="{{data}}"></scoreboard-page>
                 <schedule-page data-page="schedule" data="{{data}}"></schedule-page>
+                <admin-page data-page="admin"></admin-page>
             </iron-pages>
         </div>
     </template>
@@ -51,8 +52,7 @@
                         teams: {},
                         standings: [],
                         events: [],
-                        scores: [],
-                        articles: []
+                        scores: []
                     };
                 }
             },
@@ -64,70 +64,84 @@
         },
 
         observers: [
-            // Observe changes in the data items themselves, not on the array
-            // that stores the data items.
-            // https://github.com/firebase/polymerfire/issues/67
-            'observeTeamsQuery(_teams.splices)',
-            'observeStandingsQuery(_standings.splices)',
-            'observeScheduleQuery(_schedule.splices)',
-            'observeArticlesQuery(_articles.splices)',
-            'observeEventsQuery(_events.splices)'
+            'observeTeamsDocument(_teams.*)',
+            'observeScheduleDocument(_schedule.*, _teams.*)',
+            'observeEventsDocument(_events.*)'
         ],
 
-        observeTeamsQuery: function() {
+        observeTeamsDocument: function() {
             this.debounce('teams', function() {
-                if (this._teams.length) {
-                    this.data.teams = this._teams.reduce(function(teams, team) {
-                        teams[team.$key] = team;
-                        return teams;
-                    }, {});
+                if (this.notEmpty(this._teams)) {
+                    this.data.teams = Object.assign({}, this._teams);
                     this.notifyPath('data.teams');
                 }
             }.bind(this));
         },
 
-        observeStandingsQuery: function() {
-            this.debounce('standings', function() {
-                if (this._teams.length && this._standings.length) {
-                    this.data.standings = this._standings.map(function(standing) {
-                        return { team: standing.$key, score: standing.$val };
-                    }).reverse(); // Default is in ascending order
-                    this.notifyPath('data.standings');
-                }
-            }.bind(this));
-        },
-
-        observeScheduleQuery: function() {
+        observeScheduleDocument: function() {
             this.debounce('schedule', function() {
-                if (this._teams.length && this._schedule.length) {
-                    this.data.events = this._schedule.slice();
+                if (this.notEmpty(this._teams) && this.notEmpty(this._schedule)) {
+                    this.data.events = this.toArray(this._schedule);
                     this.notifyPath('data.events');
                 }
             }.bind(this));
         },
 
-        observeArticlesQuery: function() {
-            this.debounce('articles', function() {
-                if (this._articles.length) {
-                    this.data.articles = this._articles.slice();
-                    this.notifyPath('data.articles');
-                }
-            }.bind(this));
-        },
-
-        observeEventsQuery: function() {
+        observeEventsDocument: function() {
             this.debounce('events', function() {
-                if (this.data.standings.length && this._events.length) {
-                    this.data.scores = this._events.map(function(event) {
-                        return { event: event.name, teams: event.scores };
+                if (this.notEmpty(this._events)) {
+                    this.data.scores = Object.keys(this._events).map(function(key) {
+                        return {
+                            event: this._events[key].name,
+                            teams: this._events[key].scores
+                        };
+                    }.bind(this));
+
+                    // TODO: make this into a cloud function that updates every
+                    // time the ref for team scores changes
+                    var standings = Object.keys(this.data.teams).reduce(function(standings, key) {
+                        standings[key] = 0;
+                        return standings;
+                    }, {});
+                    standings = this.data.scores.reduce(function(standings, event) {
+                        if (event.teams) {
+                            for (var team in event.teams) {
+                                if (event.teams[team]) {
+                                    standings[team] += parseInt(event.teams[team], 10);
+                                }
+                            }
+                        }
+                        return standings;
+                    }, standings);
+                    this.data.standings = Object.keys(standings).map(function(key) {
+                        return { team: key, score: standings[key] };
+                    }).sort(function(a, b) {
+                        if (a.score < b.score) {
+                            return 1;
+                        } else if (a.score > b.score) {
+                            return -1;
+                        }
+                        return 0;
                     });
+
                     this.notifyPath('data.scores');
+                    this.notifyPath('data.standings');
                 }
             }.bind(this));
         },
 
         computePage: function(route) {
             return route.path.slice(1) || 'landing';
+        },
+
+        notEmpty: function(object) {
+            return Object.keys(object).length > 0;
+        },
+
+        toArray: function(object) {
+            return Object.keys(object).map(function(key) {
+                return object[key];
+            });
         }
     });
 </script>
